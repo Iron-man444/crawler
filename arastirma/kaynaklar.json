@@ -1,0 +1,777 @@
+{
+  "schema_version": "1.0",
+  "reviewed_on": "2026-09-24",
+  "scope": "Türkiye geneli, tüm sektörlere açık başlangıç envanteri; eksiksiz kapsama iddiası yoktur.",
+  "notes": [
+    "Bu dosya araştırma verisidir; çalışan bot yapılandırması değildir.",
+    "Öncelikler öneridir; otomatik toplama izni veya entegrasyon hazır olma durumu değildir.",
+    "Gözlenen etiketler ve önerilen sorgu sözcükleri ayrı tutulur.",
+    "API ve otomatik erişim hakkı hiçbir kaynak için bu çalışma kapsamında doğrulanmadı."
+  ],
+  "sources": [
+    {
+      "id": "S01",
+      "name": "TOBB Fuar Takvimi",
+      "hostname": "fuarlar.tobb.org.tr",
+      "entry_url": "https://fuarlar.tobb.org.tr/FuarTakvimi",
+      "primary_kind": "etkinlik",
+      "coverage": "Türkiye / çok sektör",
+      "priority": "P0",
+      "reviewed_on": "2026-09-24",
+      "verification_status": "sayfa_okundu",
+      "finding": "Başlangıç/bitiş, konu, şehir, düzenleyici ve web alanları var; Excel dışa aktarımı görünüyor.",
+      "recommended_next_action": "İzinli dosya aktarımı veya sayfa adaptörü değerlendirilecek.",
+      "automation_permission": "not_verified",
+      "public_api_status": "not_verified",
+      "enabled_for_collection": false,
+      "evidence": [
+        {
+          "url": "https://fuarlar.tobb.org.tr/FuarTakvimi",
+          "note": "Web araştırmasında sayfa içeriği okundu."
+        }
+      ],
+      "observed_tags": [
+        {
+          "value": "Uluslararası İhtisas",
+          "kind": "source_label",
+          "evidence_url": "https://fuarlar.tobb.org.tr/FuarTakvimi"
+        }
+      ],
+      "suggested_search_terms": [
+        "fuar",
+        "sektörel fuar",
+        "B2B"
+      ]
+    },
+    {
+      "id": "S02",
+      "name": "TÜYAP Fuar Arama",
+      "hostname": "tuyap.com.tr",
+      "entry_url": "https://tuyap.com.tr/fuar-arama",
+      "primary_kind": "etkinlik",
+      "coverage": "Türkiye / sanayi, gıda, tarım, kitap ve diğer fuarlar",
+      "priority": "P1",
+      "reviewed_on": "2026-09-24",
+      "verification_status": "resmi_indeks",
+      "finding": "Resmî fuar arama ve takvim sayfası indekslendi.",
+      "recommended_next_action": "TOBB kaydını organizatör ayrıntısıyla zenginleştir; tek etkinliğe bağla.",
+      "automation_permission": "not_verified",
+      "public_api_status": "not_verified",
+      "enabled_for_collection": false,
+      "evidence": [
+        {
+          "url": "https://tuyap.com.tr/fuar-arama",
+          "note": "Resmî sayfanın arama indeksi içeriği incelendi."
+        }
+      ],
+      "observed_tags": [],
+      "suggested_search_terms": [
+        "fuar",
+        "imalat",
+        "tarım",
+        "gıda"
+      ]
+    },
+    {
+      "id": "S03",
+      "name": "İstanbul Fuar Merkezi",
+      "hostname": "ifm.com.tr",
+      "entry_url": "https://ifm.com.tr/tr/ifm-fuar-takvimi",
+      "primary_kind": "etkinlik",
+      "coverage": "İstanbul / çok sektör; ulusal katılım",
+      "priority": "P1",
+      "reviewed_on": "2026-09-24",
+      "verification_status": "resmi_indeks",
+      "finding": "Takvimde organizatör, etkinlik adı ve tarih listeleniyor.",
+      "recommended_next_action": "Ay sınırını geçen tarih aralıklarını detay sayfasından doğrula.",
+      "automation_permission": "not_verified",
+      "public_api_status": "not_verified",
+      "enabled_for_collection": false,
+      "evidence": [
+        {
+          "url": "https://ifm.com.tr/tr/ifm-fuar-takvimi",
+          "note": "Resmî sayfanın arama indeksi içeriği incelendi."
+        }
+      ],
+      "observed_tags": [],
+      "suggested_search_terms": [
+        "fuar",
+        "mobilya",
+        "reklam",
+        "mücevher"
+      ]
+    },
+    {
+      "id": "S04",
+      "name": "Biletino",
+      "hostname": "biletino.com",
+      "entry_url": "https://biletino.com/tr/turkiye/",
+      "primary_kind": "etkinlik",
+      "coverage": "Türkiye / kültür, eğitim, sosyal etkinlik",
+      "priority": "P0",
+      "reviewed_on": "2026-09-24",
+      "verification_status": "sayfa_okundu",
+      "finding": "Kategori, konum ve tarih araması; şehir ve etkinlik listeleri görüldü.",
+      "recommended_next_action": "Otomatik toplama hakkı teyit edilecek; başlangıçta kaynak keşfi.",
+      "automation_permission": "not_verified",
+      "public_api_status": "not_verified",
+      "enabled_for_collection": false,
+      "evidence": [
+        {
+          "url": "https://biletino.com/tr/turkiye/",
+          "note": "Web araştırmasında sayfa içeriği okundu."
+        }
+      ],
+      "observed_tags": [
+        {
+          "value": "Canlı Konserler",
+          "kind": "source_label",
+          "evidence_url": "https://biletino.com/tr/turkiye/"
+        },
+        {
+          "value": "Stand-Up/Komedi Gösterileri",
+          "kind": "source_label",
+          "evidence_url": "https://biletino.com/tr/turkiye/"
+        }
+      ],
+      "suggested_search_terms": [
+        "etkinlik",
+        "atölye",
+        "festival",
+        "networking"
+      ]
+    },
+    {
+      "id": "S05",
+      "name": "Biletinial",
+      "hostname": "biletinial.com",
+      "entry_url": "https://biletinial.com/tr-tr",
+      "primary_kind": "etkinlik",
+      "coverage": "Türkiye / kültür ve sahne etkinlikleri",
+      "priority": "P1",
+      "reviewed_on": "2026-09-24",
+      "verification_status": "sayfa_okundu",
+      "finding": "Etkinlik liste ve bilet bağlantıları görüldü.",
+      "recommended_next_action": "Kategori/şehir detayları kaynak bazında eşlenecek.",
+      "automation_permission": "not_verified",
+      "public_api_status": "not_verified",
+      "enabled_for_collection": false,
+      "evidence": [
+        {
+          "url": "https://biletinial.com/tr-tr",
+          "note": "Web araştırmasında sayfa içeriği okundu."
+        }
+      ],
+      "observed_tags": [],
+      "suggested_search_terms": [
+        "tiyatro",
+        "konser",
+        "sinema",
+        "kültür sanat"
+      ]
+    },
+    {
+      "id": "S06",
+      "name": "Biletix",
+      "hostname": "biletix.com",
+      "entry_url": "https://www.biletix.com/",
+      "primary_kind": "etkinlik",
+      "coverage": "Türkiye / kültür, spor ve sanat",
+      "priority": "P2",
+      "reviewed_on": "2026-09-24",
+      "verification_status": "sinirli_icerik",
+      "finding": "Başlık doğrulandı; araştırma aracına ayrıntılı liste gelmedi.",
+      "recommended_next_action": "Dinamik erişim incelemesi gerekiyor; otomasyon hazır kabul edilmez.",
+      "automation_permission": "not_verified",
+      "public_api_status": "not_verified",
+      "enabled_for_collection": false,
+      "evidence": [
+        {
+          "url": "https://www.biletix.com/",
+          "note": "Sınırlı erişim; finding alanına bakınız."
+        }
+      ],
+      "observed_tags": [],
+      "suggested_search_terms": [
+        "konser",
+        "spor",
+        "sanat",
+        "müze"
+      ]
+    },
+    {
+      "id": "S07",
+      "name": "Kommunity",
+      "hostname": "kommunity.com",
+      "entry_url": "https://kommunity.com/search",
+      "primary_kind": "etkinlik",
+      "coverage": "Türkiye filtresi / topluluk ve mesleki buluşmalar",
+      "priority": "P1",
+      "reviewed_on": "2026-09-24",
+      "verification_status": "resmi_indeks",
+      "finding": "Arama sayfası ve Ankara topluluğu indekslendi; doğrudan açma başarısız.",
+      "recommended_next_action": "Topluluk/organizatör üzerinden keşif; API/izin incelemesi bekliyor.",
+      "automation_permission": "not_verified",
+      "public_api_status": "not_verified",
+      "enabled_for_collection": false,
+      "evidence": [
+        {
+          "url": "https://kommunity.com/search",
+          "note": "Resmî sayfanın arama indeksi içeriği incelendi."
+        },
+        {
+          "url": "https://kommunity.com/cloud-native-ankara",
+          "note": "Resmî topluluk sayfası arama indeksinde görüldü."
+        }
+      ],
+      "observed_tags": [],
+      "suggested_search_terms": [
+        "topluluk",
+        "meetup",
+        "workshop",
+        "networking"
+      ]
+    },
+    {
+      "id": "S08",
+      "name": "TechAnkara Proje Pazarı",
+      "hostname": "ankaraprojepazari.com",
+      "entry_url": "https://www.ankaraprojepazari.com/takvim/",
+      "primary_kind": "etkinlik",
+      "coverage": "Ankara / girişimcilik ve çok sektörlü teknoloji",
+      "priority": "P1",
+      "reviewed_on": "2026-09-24",
+      "verification_status": "sayfa_okundu_eski_donem",
+      "finding": "Takvim 2024 döneminde; 2026 için ajansın ayrı duyurusu esas alınmalı.",
+      "recommended_next_action": "Yıl/dönem, proje başvurusu ve ziyaretçi katılımı ayrı değerlendirilecek.",
+      "automation_permission": "not_verified",
+      "public_api_status": "not_verified",
+      "enabled_for_collection": false,
+      "evidence": [
+        {
+          "url": "https://www.ankaraprojepazari.com/takvim/",
+          "note": "Web araştırmasında sayfa içeriği okundu."
+        },
+        {
+          "url": "https://www.ankaraka.org.tr/techankara-proje-pazari-2026da-sergilenecek-projeler-aciklandi",
+          "note": "2026 dönemi için 31 Temmuz 2026 tarihli ajans duyurusu."
+        }
+      ],
+      "observed_tags": [
+        {
+          "value": "#TechAnkara",
+          "kind": "hashtag",
+          "verification": "official_account_search_index",
+          "evidence_url": "https://tr.linkedin.com/posts/ankara-development-agency_stb-kagm-ankarakalk%C4%B1nmaajans%C4%B1-activity-7467145333249286144-phGa"
+        },
+        {
+          "value": "#ProjePazarı",
+          "kind": "hashtag",
+          "verification": "official_account_search_index",
+          "evidence_url": "https://tr.linkedin.com/posts/ankara-development-agency_stb-kagm-ankarakalk%C4%B1nmaajans%C4%B1-activity-7467145333249286144-phGa"
+        },
+        {
+          "value": "#Girişimcilik",
+          "kind": "hashtag",
+          "verification": "official_account_search_index",
+          "evidence_url": "https://tr.linkedin.com/posts/ankara-development-agency_stb-kagm-ankarakalk%C4%B1nmaajans%C4%B1-activity-7467145333249286144-phGa"
+        },
+        {
+          "value": "#İnovasyon",
+          "kind": "hashtag",
+          "verification": "official_account_search_index",
+          "evidence_url": "https://tr.linkedin.com/posts/ankara-development-agency_stb-kagm-ankarakalk%C4%B1nmaajans%C4%B1-activity-7467145333249286144-phGa"
+        },
+        {
+          "value": "#Networking",
+          "kind": "hashtag",
+          "verification": "official_account_search_index",
+          "evidence_url": "https://tr.linkedin.com/posts/ankara-development-agency_stb-kagm-ankarakalk%C4%B1nmaajans%C4%B1-activity-7467145333249286144-phGa"
+        }
+      ],
+      "suggested_search_terms": [
+        "TechAnkara",
+        "proje pazarı",
+        "yatırımcı",
+        "girişimcilik"
+      ]
+    },
+    {
+      "id": "S09",
+      "name": "TechAnkara Girişimcilik Portalı",
+      "hostname": "girisimci.ankaraka.org.tr",
+      "entry_url": "https://girisimci.ankaraka.org.tr/tr",
+      "primary_kind": "destek_cagrisi",
+      "coverage": "Ankara / girişimcilik",
+      "priority": "P1",
+      "reviewed_on": "2026-09-24",
+      "verification_status": "resmi_indeks",
+      "finding": "2026 Proje Pazarı başvuru duyurusu indekslendi.",
+      "recommended_next_action": "Ajans kaydıyla eşle; başvuru hesabını otomatik kullanma.",
+      "automation_permission": "not_verified",
+      "public_api_status": "not_verified",
+      "enabled_for_collection": false,
+      "evidence": [
+        {
+          "url": "https://girisimci.ankaraka.org.tr/tr",
+          "note": "Resmî sayfanın arama indeksi içeriği incelendi."
+        }
+      ],
+      "observed_tags": [],
+      "suggested_search_terms": [
+        "hızlandırıcı",
+        "girişimcilik",
+        "başvuru"
+      ]
+    },
+    {
+      "id": "S10",
+      "name": "DEİK Etkinlikler",
+      "hostname": "deik.org.tr",
+      "entry_url": "https://www.deik.org.tr/etkinlikler",
+      "primary_kind": "etkinlik",
+      "coverage": "Türkiye bağlantılı / dış ticaret ve çok sektör",
+      "priority": "P0",
+      "reviewed_on": "2026-09-24",
+      "verification_status": "sayfa_okundu",
+      "finding": "İş konseyi yapısı, sektörel başlıklar ve etkinlik sayfası doğrulandı.",
+      "recommended_next_action": "Geçmiş etkinlik haberini yaklaşan iş forumundan ayır; üyelik koşulunu sakla.",
+      "automation_permission": "not_verified",
+      "public_api_status": "not_verified",
+      "enabled_for_collection": false,
+      "evidence": [
+        {
+          "url": "https://www.deik.org.tr/etkinlikler",
+          "note": "Web araştırmasında sayfa içeriği okundu."
+        }
+      ],
+      "observed_tags": [
+        {
+          "value": "#İşimizTicariDiplomasi",
+          "kind": "hashtag",
+          "evidence_url": "https://www.deik.org.tr/etkinlikler"
+        }
+      ],
+      "suggested_search_terms": [
+        "iş forumu",
+        "ticaret heyeti",
+        "B2B",
+        "iş birliği"
+      ]
+    },
+    {
+      "id": "S11",
+      "name": "İstanbul Ticaret Odası Etkinlikler",
+      "hostname": "ito.org.tr",
+      "entry_url": "https://ito.org.tr/tr/etkinlikler/",
+      "primary_kind": "etkinlik",
+      "coverage": "İstanbul ve çevrim içi / çok sektör",
+      "priority": "P0",
+      "reviewed_on": "2026-09-24",
+      "verification_status": "resmi_indeks",
+      "finding": "Tarih/saat, kayıt bilgisi ve başvurusu tamamlanmış etkinlikler indekslendi.",
+      "recommended_next_action": "Etkinlik tarihi ile kayıt durumu için ayrı alanlar kullan.",
+      "automation_permission": "not_verified",
+      "public_api_status": "not_verified",
+      "enabled_for_collection": false,
+      "evidence": [
+        {
+          "url": "https://ito.org.tr/tr/etkinlikler/",
+          "note": "Resmî sayfanın arama indeksi içeriği incelendi."
+        }
+      ],
+      "observed_tags": [],
+      "suggested_search_terms": [
+        "seminer",
+        "tedarikçi günü",
+        "eğitim",
+        "iş geliştirme"
+      ]
+    },
+    {
+      "id": "S12",
+      "name": "TİM Duyurular",
+      "hostname": "tim.org.tr",
+      "entry_url": "https://www.tim.org.tr/tr/duyurular",
+      "primary_kind": "ticari_teklif",
+      "coverage": "Türkiye bağlantılı / ihracat ve çok sektör",
+      "priority": "P1",
+      "reviewed_on": "2026-09-24",
+      "verification_status": "resmi_indeks",
+      "finding": "Resmî listede fuar ve ticaret içerikleri görüldü.",
+      "recommended_next_action": "Her duyuru fırsat değildir; mevzuat/haber ile çağrıyı ayır.",
+      "automation_permission": "not_verified",
+      "public_api_status": "not_verified",
+      "enabled_for_collection": false,
+      "evidence": [
+        {
+          "url": "https://www.tim.org.tr/tr/duyurular",
+          "note": "Resmî sayfanın arama indeksi içeriği incelendi."
+        }
+      ],
+      "observed_tags": [],
+      "suggested_search_terms": [
+        "ihracat",
+        "ticaret heyeti",
+        "alım heyeti",
+        "fuar"
+      ]
+    },
+    {
+      "id": "S13",
+      "name": "Enterprise Europe Network",
+      "hostname": "een.ec.europa.eu",
+      "entry_url": "https://een.ec.europa.eu/partnering-opportunities",
+      "primary_kind": "ortaklik",
+      "coverage": "Uluslararası; Türkiye'ye uygun ilanlar / çok sektör",
+      "priority": "P1",
+      "reviewed_on": "2026-09-24",
+      "verification_status": "resmi_indeks",
+      "finding": "Ortaklık fırsatları ve Business Offer ilanları indekslendi; doğrudan açma başarısız.",
+      "recommended_next_action": "Türkiye uygunluğu ilan bazında incelenir.",
+      "automation_permission": "not_verified",
+      "public_api_status": "not_verified",
+      "enabled_for_collection": false,
+      "evidence": [
+        {
+          "url": "https://een.ec.europa.eu/partnering-opportunities",
+          "note": "Resmî sayfanın arama indeksi içeriği incelendi."
+        }
+      ],
+      "observed_tags": [
+        {
+          "value": "Business Offer",
+          "kind": "source_label",
+          "evidence_url": "https://een.ec.europa.eu/partnering-opportunities"
+        }
+      ],
+      "suggested_search_terms": [
+        "technology offer",
+        "technology request",
+        "business offer",
+        "research partner"
+      ]
+    },
+    {
+      "id": "S14",
+      "name": "İTO Yan Sanayi Borsası",
+      "hostname": "yansanayi.ito.org.tr",
+      "entry_url": "https://yansanayi.ito.org.tr/",
+      "primary_kind": "ortaklik",
+      "coverage": "Türkiye bağlantılı / sanayi ve tedarik",
+      "priority": "P0",
+      "reviewed_on": "2026-09-24",
+      "verification_status": "resmi_indeks",
+      "finding": "Resmî sayfa tedarikçi günleri ve talep eşleştirme hizmetini anlatıyor.",
+      "recommended_next_action": "Açık etkinliklerle üyeye özel eşleştirme verisini ayır.",
+      "automation_permission": "not_verified",
+      "public_api_status": "not_verified",
+      "enabled_for_collection": false,
+      "evidence": [
+        {
+          "url": "https://yansanayi.ito.org.tr/",
+          "note": "Resmî sayfanın arama indeksi içeriği incelendi."
+        }
+      ],
+      "observed_tags": [],
+      "suggested_search_terms": [
+        "tedarikçi",
+        "yan sanayi",
+        "talep eşleştirme",
+        "B2B"
+      ]
+    },
+    {
+      "id": "S15",
+      "name": "Ticaret Bakanlığı Dış Talepler Bülteni",
+      "hostname": "distalep.ticaret.gov.tr",
+      "entry_url": "https://distalep.ticaret.gov.tr/giris/",
+      "primary_kind": "ticari_teklif",
+      "coverage": "Türkiye ihracatçıları / ürün, hizmet ve uluslararası ihale",
+      "priority": "P2",
+      "reviewed_on": "2026-09-24",
+      "verification_status": "giris_gerekli",
+      "finding": "Resmî giriş ekranı ve Bakanlığın içerik açıklaması bulundu.",
+      "recommended_next_action": "Hesap/kullanım yetkisi olmadan toplama yapılmaz; ilk aşama manuel kayıt.",
+      "automation_permission": "not_verified",
+      "public_api_status": "not_verified",
+      "enabled_for_collection": false,
+      "evidence": [
+        {
+          "url": "https://distalep.ticaret.gov.tr/giris/",
+          "note": "Sınırlı erişim; finding alanına bakınız."
+        },
+        {
+          "url": "https://dys.ticaret.gov.tr/destek-mekanizmalari-ve-bilgi-kaynaklari/dis-talepler-bulteni",
+          "note": "Bültenin kapsamını açıklayan resmî sayfa."
+        }
+      ],
+      "observed_tags": [],
+      "suggested_search_terms": [
+        "alım talebi",
+        "hizmet talebi",
+        "ihracat",
+        "ihale"
+      ]
+    },
+    {
+      "id": "S16",
+      "name": "EKAP İhale Arama",
+      "hostname": "ekap.kik.gov.tr",
+      "entry_url": "https://ekap.kik.gov.tr/EKAP/Ortak/IhaleArama/index.html",
+      "primary_kind": "ticari_teklif",
+      "coverage": "Türkiye / kamu alımları, çok sektör",
+      "priority": "P2",
+      "reviewed_on": "2026-09-24",
+      "verification_status": "sayfa_okundu_yonlendirme",
+      "finding": "Eski sayfa yeni arama ekranına yönlendirme bildiriyor.",
+      "recommended_next_action": "Aktif ekranı ve resmî erişimi yeniden doğrula; ilk sürümde manuel bağlantı.",
+      "automation_permission": "not_verified",
+      "public_api_status": "not_verified",
+      "enabled_for_collection": false,
+      "evidence": [
+        {
+          "url": "https://ekap.kik.gov.tr/EKAP/Ortak/IhaleArama/index.html",
+          "note": "Web araştırmasında sayfa içeriği okundu."
+        }
+      ],
+      "observed_tags": [],
+      "suggested_search_terms": [
+        "ihale",
+        "mal alımı",
+        "hizmet alımı",
+        "yapım işi"
+      ]
+    },
+    {
+      "id": "S17",
+      "name": "Kariyer.net İş İlanları",
+      "hostname": "kariyer.net",
+      "entry_url": "https://www.kariyer.net/is-ilanlari",
+      "primary_kind": "is_ilani",
+      "coverage": "Türkiye / çok sektör",
+      "priority": "P0",
+      "reviewed_on": "2026-09-24",
+      "verification_status": "sayfa_okundu",
+      "finding": "Resmî iş ilanı listeleme sayfası okunabildi.",
+      "recommended_next_action": "İzinli feed/entegrasyon veya manuel kayıt; işe alımı ticari tekliften ayır.",
+      "automation_permission": "not_verified",
+      "public_api_status": "not_verified",
+      "enabled_for_collection": false,
+      "evidence": [
+        {
+          "url": "https://www.kariyer.net/is-ilanlari",
+          "note": "Web araştırmasında sayfa içeriği okundu."
+        }
+      ],
+      "observed_tags": [],
+      "suggested_search_terms": [
+        "iş ilanı",
+        "tam zamanlı",
+        "uzaktan",
+        "staj"
+      ]
+    },
+    {
+      "id": "S18",
+      "name": "Yenibiriş İş İlanları",
+      "hostname": "yenibiris.com",
+      "entry_url": "https://www.yenibiris.com/is-ilanlari",
+      "primary_kind": "is_ilani",
+      "coverage": "Türkiye / çok sektör",
+      "priority": "P1",
+      "reviewed_on": "2026-09-24",
+      "verification_status": "sayfa_okundu",
+      "finding": "Resmî iş ilanı liste sayfası okunabildi.",
+      "recommended_next_action": "İlan kimliği ve kapanış bilgisi üzerinden takip.",
+      "automation_permission": "not_verified",
+      "public_api_status": "not_verified",
+      "enabled_for_collection": false,
+      "evidence": [
+        {
+          "url": "https://www.yenibiris.com/is-ilanlari",
+          "note": "Web araştırmasında sayfa içeriği okundu."
+        }
+      ],
+      "observed_tags": [],
+      "suggested_search_terms": [
+        "iş ilanı",
+        "kariyer",
+        "personel"
+      ]
+    },
+    {
+      "id": "S19",
+      "name": "İŞKUR",
+      "hostname": "iskur.gov.tr",
+      "entry_url": "https://www.iskur.gov.tr/",
+      "primary_kind": "is_ilani",
+      "coverage": "Türkiye / çok sektör",
+      "priority": "P0",
+      "reviewed_on": "2026-09-24",
+      "verification_status": "sayfa_okundu",
+      "finding": "İş arama alanında meslek ve şehir seçimi mevcut.",
+      "recommended_next_action": "İlan detayı erişimi ve hesap ihtiyacı ayrı incelenir.",
+      "automation_permission": "not_verified",
+      "public_api_status": "not_verified",
+      "enabled_for_collection": false,
+      "evidence": [
+        {
+          "url": "https://www.iskur.gov.tr/",
+          "note": "Web araştırmasında sayfa içeriği okundu."
+        }
+      ],
+      "observed_tags": [],
+      "suggested_search_terms": [
+        "iş ilanı",
+        "meslek",
+        "istihdam"
+      ]
+    },
+    {
+      "id": "S20",
+      "name": "KOSGEB Duyurular",
+      "hostname": "kosgeb.gov.tr",
+      "entry_url": "https://www.kosgeb.gov.tr/site/tr/genel/liste/2/basin-ve-duyurular?Page=1",
+      "primary_kind": "destek_cagrisi",
+      "coverage": "Türkiye / KOBİ ve program bazlı sektörler",
+      "priority": "P1",
+      "reviewed_on": "2026-09-24",
+      "verification_status": "sayfa_okundu",
+      "finding": "Resmî duyuru listesi doğrulandı.",
+      "recommended_next_action": "Uygunluk ve son başvuru tarihini kaynak belgesiyle doğrula; haberleri ayır.",
+      "automation_permission": "not_verified",
+      "public_api_status": "not_verified",
+      "enabled_for_collection": false,
+      "evidence": [
+        {
+          "url": "https://www.kosgeb.gov.tr/site/tr/genel/liste/2/basin-ve-duyurular?Page=1",
+          "note": "Web araştırmasında sayfa içeriği okundu."
+        }
+      ],
+      "observed_tags": [],
+      "suggested_search_terms": [
+        "destek çağrısı",
+        "KOBİ",
+        "girişimci",
+        "başvuru"
+      ]
+    },
+    {
+      "id": "S21",
+      "name": "TÜBİTAK",
+      "hostname": "tubitak.gov.tr",
+      "entry_url": "https://tubitak.gov.tr/tr",
+      "primary_kind": "destek_cagrisi",
+      "coverage": "Türkiye / Ar-Ge, bilim ve sektörler arası programlar",
+      "priority": "P1",
+      "reviewed_on": "2026-09-24",
+      "verification_status": "resmi_indeks",
+      "finding": "Çağrı ve süre uzatımı duyuruları indekslendi.",
+      "recommended_next_action": "Çağrı numarası, kapanış sürümü ve program şartlarıyla tekilleştir.",
+      "automation_permission": "not_verified",
+      "public_api_status": "not_verified",
+      "enabled_for_collection": false,
+      "evidence": [
+        {
+          "url": "https://tubitak.gov.tr/tr",
+          "note": "Resmî sayfanın arama indeksi içeriği incelendi."
+        }
+      ],
+      "observed_tags": [],
+      "suggested_search_terms": [
+        "Ar-Ge",
+        "çağrı",
+        "konsorsiyum",
+        "proje ortağı"
+      ]
+    },
+    {
+      "id": "S22",
+      "name": "StartupCentrum",
+      "hostname": "startupcentrum.com",
+      "entry_url": "https://startupcentrum.com/",
+      "primary_kind": "ortaklik",
+      "coverage": "Türkiye filtresi / girişimler ve yetenek",
+      "priority": "P1",
+      "reviewed_on": "2026-09-24",
+      "verification_status": "sayfa_okundu",
+      "finding": "Resmî sayfa girişim, iş ilanı, yatırımcı, kuluçka ve hızlandırıcılardan söz ediyor.",
+      "recommended_next_action": "Açık içerik ile profil/üyelik alanlarını ayır.",
+      "automation_permission": "not_verified",
+      "public_api_status": "not_verified",
+      "enabled_for_collection": false,
+      "evidence": [
+        {
+          "url": "https://startupcentrum.com/",
+          "note": "Web araştırmasında sayfa içeriği okundu."
+        }
+      ],
+      "observed_tags": [],
+      "suggested_search_terms": [
+        "kurucu ortak",
+        "startup",
+        "yatırımcı",
+        "hızlandırıcı"
+      ]
+    },
+    {
+      "id": "S23",
+      "name": "ODTÜ TEKNOKENT",
+      "hostname": "odtuteknokent.com.tr",
+      "entry_url": "https://www.odtuteknokent.com.tr/",
+      "primary_kind": "etkinlik",
+      "coverage": "Ankara ve program bazlı diğer konumlar / teknoloji",
+      "priority": "P1",
+      "reviewed_on": "2026-09-24",
+      "verification_status": "resmi_indeks",
+      "finding": "Resmî program ve ekosistem etkinliği haberleri indekslendi.",
+      "recommended_next_action": "Duyuru tarihini etkinlik tarihi sanma; gerçekleşenleri arşive al.",
+      "automation_permission": "not_verified",
+      "public_api_status": "not_verified",
+      "enabled_for_collection": false,
+      "evidence": [
+        {
+          "url": "https://www.odtuteknokent.com.tr/",
+          "note": "Resmî sayfanın arama indeksi içeriği incelendi."
+        }
+      ],
+      "observed_tags": [],
+      "suggested_search_terms": [
+        "teknokent",
+        "Ar-Ge",
+        "teknoloji",
+        "girişimcilik"
+      ]
+    },
+    {
+      "id": "S24",
+      "name": "Türkiye Özel Okullar Derneği (TÖZOK)",
+      "hostname": "tozok.org.tr",
+      "entry_url": "https://www.tozok.org.tr/etkinlik-takvimi",
+      "primary_kind": "etkinlik",
+      "coverage": "Türkiye / eğitim",
+      "priority": "P1",
+      "reviewed_on": "2026-09-24",
+      "verification_status": "resmi_indeks",
+      "finding": "Derneğin etkinlik takvimi resmî arama sonucunda doğrulandı.",
+      "recommended_next_action": "Eğitim sektörü dikey kaynağı; tarih/katılım koşulunu detaydan doğrula.",
+      "automation_permission": "not_verified",
+      "public_api_status": "not_verified",
+      "enabled_for_collection": false,
+      "evidence": [
+        {
+          "url": "https://www.tozok.org.tr/etkinlik-takvimi",
+          "note": "Resmî sayfanın arama indeksi içeriği incelendi."
+        }
+      ],
+      "observed_tags": [],
+      "suggested_search_terms": [
+        "eğitim",
+        "özel okul",
+        "sempozyum",
+        "seminer"
+      ]
+    }
+  ]
+}

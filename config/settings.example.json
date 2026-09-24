@@ -1,0 +1,39 @@
+{
+  "listen": "127.0.0.1",
+  "port": 8787,
+  "user_agent": "FirsatRadari/0.1",
+  "host_delay_seconds": 10,
+  "max_jobs_per_tick": 20,
+  "llm": {
+    "provider": "gemini",
+    "model": "SET_MODEL_ID",
+    "api_key_env": "GEMINI_API_KEY",
+    "max_calls_per_day": 100,
+    "chunk_chars": 10000,
+    "max_chunks": 8
+  },
+  "profiles": [
+    {
+      "id": "teknoloji",
+      "enabled": false,
+      "description": "Türkiye genelinde yapay zeka, yazılım, siber güvenlik, teknoloji buluşmaları, iş ortaklıkları, iş fırsatları ve ilgili duyurular. Eğitim, bootcamp, sertifika, indirim ve fiyat kampanyaları kapsam dışıdır.",
+      "target_ref": "main",
+      "interval_seconds": 1800,
+      "seed_urls": ["https://kommunity.com/search"],
+      "search_queries": ["(\"yapay zeka\" OR \"siber güvenlik\") (buluşma OR konferans OR \"iş ortaklığı\")"],
+      "allowed_domains": ["kommunity.com"],
+      "max_pages": 20,
+      "max_depth": 1,
+      "notify_initial": false,
+      "include_words": [],
+      "exclude_words": ["bootcamp", "sertifika", "indirim", "kupon"],
+      "include_tags": [],
+      "exclude_tags": ["education", "discount"],
+      "match_mode": "any",
+      "allowed_types": [],
+      "excluded_types": ["education", "discount"],
+      "locations": [],
+      "exclude_past_events": true
+    }
+  ]
+}

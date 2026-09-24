@@ -1,0 +1,53 @@
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: radar
+      POSTGRES_DB: radar
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - radar_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U radar -d radar"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+  radar:
+    build: .
+    command: ["sh", "-c", "ruby bin/radar migrate && exec ruby bin/radar run"]
+    environment:
+      DATABASE_URL: postgresql://radar:${POSTGRES_PASSWORD}@db:5432/radar
+      RADAR_API_TOKEN: ${RADAR_API_TOKEN:?Set RADAR_API_TOKEN in .env}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      MISTRAL_API_KEY: ${MISTRAL_API_KEY:-}
+      SERPAPI_API_KEY: ${SERPAPI_API_KEY:-}
+    volumes:
+      - ./config/settings.json:/app/config/settings.json:ro
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "ruby", "scripts/healthcheck.rb"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    restart: unless-stopped
+    stop_grace_period: 2m
+  telegram:
+    build: .
+    command: ["ruby", "bin/telegram"]
+    network_mode: service:radar
+    environment:
+      RADAR_URL: http://127.0.0.1:8787
+      RADAR_API_TOKEN: ${RADAR_API_TOKEN}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:?Set TELEGRAM_BOT_TOKEN in .env}
+      TELEGRAM_TARGETS: ${TELEGRAM_TARGETS:?Set TELEGRAM_TARGETS in .env}
+    depends_on:
+      radar:
+        condition: service_healthy
+    restart: unless-stopped
+volumes:
+  radar_data:

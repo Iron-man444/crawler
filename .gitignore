@@ -1,0 +1,16 @@
+.tools/
+.bundle/
+vendor/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.ppk
+config/settings.json
+tmp/
+log/
+__pycache__/
+*.pyc

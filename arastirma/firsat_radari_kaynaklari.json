@@ -1,0 +1,150 @@
+{
+  "schema_version": "3.1",
+  "reviewed_on": "2026-09-24",
+  "purpose": "Araştırma ve kapsam listesi; çalışan crawler yapılandırması değildir.",
+  "scope": {
+    "mode": "configurable_information_monitoring",
+    "delivery": "telegram",
+    "discovery": [
+      "seed_sites",
+      "search_queries"
+    ],
+    "llm_modes": [
+      "local",
+      "api"
+    ],
+    "topic_examples": [
+      "ai",
+      "software",
+      "cybersecurity",
+      "business-partnership"
+    ],
+    "record_type_policy": "Bir etkinlik türüyle sınırlı değil; tür ve konu takip profiliyle belirlenir.",
+    "geography_policy": "Takip profiline göre; önceki Türkiye/çevrim içi odağı örnek başlangıçtır.",
+    "deferred_features": [
+      "education",
+      "bootcamp",
+      "certification",
+      "discount_tracking",
+      "price_tracking"
+    ]
+  },
+  "defaults": {
+    "enabled_for_collection": false,
+    "automation_permission": "not_verified",
+    "site_specific_selectors": false
+  },
+  "sources": [
+    {
+      "id": "V2-S01",
+      "name": "Kommunity",
+      "url": "https://kommunity.com/search",
+      "hostname": "kommunity.com",
+      "source_kind": "web",
+      "verification": "official_search_index_prior_research",
+      "selection": "Kullanıcının belirttiği platform",
+      "pending": [
+        "İlgili topluluk seed URL'leri",
+        "Erişim yöntemi ve izinler"
+      ],
+      "evidence_url": "https://kommunity.com/search"
+    },
+    {
+      "id": "V2-S02",
+      "name": "Meetup",
+      "url": "https://www.meetup.com/",
+      "hostname": "www.meetup.com",
+      "source_kind": "web",
+      "verification": "official_page_read",
+      "selection": "Kullanıcının belirttiği platform",
+      "pending": [
+        "Türkiye/şehir/konu gruplarının seed URL'leri",
+        "Oturum/API ve otomatik erişim şartları"
+      ],
+      "evidence_url": "https://www.meetup.com/"
+    },
+    {
+      "id": "V2-S03",
+      "name": "Techcareer",
+      "url": "https://www.techcareer.net/events",
+      "hostname": "www.techcareer.net",
+      "source_kind": "web",
+      "verification": "official_page_read",
+      "selection": "Kullanıcının belirttiği platform",
+      "pending": [
+        "Erişim izinleri",
+        "Hackathon/genel etkinlik ile ertelenmiş eğitim/kampanya ayrımı"
+      ],
+      "evidence_url": "https://www.techcareer.net/events",
+      "note": "Hackathon veya ilgili genel etkinlikler için aday. Eğitim, bootcamp/sertifika ve kampanya içerikleri kullanıcı isteğiyle şimdilik ertelendi."
+    },
+    {
+      "id": "V2-S04",
+      "name": "Telegram kanalları",
+      "url": null,
+      "hostname": null,
+      "source_kind": "telegram_channel",
+      "verification": "channel_list_missing",
+      "selection": "Kullanıcının belirttiği kaynak türü",
+      "pending": [
+        "Kanal kimliği/bağlantıları",
+        "Yetkili kaynak alıcısı",
+        "Mesaj düzenleme/silme ve geçmiş kapsamı"
+      ],
+      "evidence_url": "https://core.telegram.org/bots/faq#what-messages-will-my-bot-get",
+      "note": "Bu bağlantı erişim davranışının dokümanıdır; seçilmiş kanal kanıtı değildir. Gönderim botu kullanıcı sorumluluğunda; kaynak alıcısı ayrı rol."
+    },
+    {
+      "id": "V2-S05",
+      "name": "Expo İstanbul — İFM aday adresi",
+      "user_requested_name": "Expo İstanbul",
+      "url": "https://ifm.com.tr/tr/ifm-fuar-takvimi",
+      "hostname": "ifm.com.tr",
+      "source_kind": "web",
+      "verification": "candidate_page_read_identity_unconfirmed",
+      "selection": "Kastedilen adres kesin değil; doğrulanmış takvim adayı",
+      "pending": [
+        "Kullanıcının kastettiği kesin URL",
+        "Erişim izinleri",
+        "İlgili teknoloji/kurumsal çözüm etkinlikleri"
+      ],
+      "evidence_url": "https://ifm.com.tr/tr/ifm-fuar-takvimi",
+      "note": "İFM ile Expo İstanbul ifadesi kesin eşleştirilmedi."
+    },
+    {
+      "id": "V2-S06",
+      "name": "TechAnkara — güncel ajans duyurusu",
+      "url": "https://www.ankaraka.org.tr/techankara-proje-pazari-2026da-sergilenecek-projeler-aciklandi",
+      "hostname": "www.ankaraka.org.tr",
+      "source_kind": "web",
+      "verification": "official_page_read_prior_research",
+      "selection": "Önceki araştırmadan ek aday",
+      "pending": [
+        "Güncel liste/duyuru seed'i",
+        "Erişim izinleri"
+      ],
+      "evidence_url": "https://www.ankaraka.org.tr/techankara-proje-pazari-2026da-sergilenecek-projeler-aciklandi",
+      "note": "2026 proje başvuruları kapanmış; bu kayıt açık başvuru fırsatı değildir. Eski takvim 2024 döneminde."
+    },
+    {
+      "id": "V2-S07",
+      "name": "ODTÜ TEKNOKENT",
+      "url": "https://www.odtuteknokent.com.tr/",
+      "hostname": "www.odtuteknokent.com.tr",
+      "source_kind": "web",
+      "verification": "official_search_index_prior_research",
+      "selection": "Önceki araştırmadan ek aday",
+      "pending": [
+        "Güncel etkinlik/program listesi",
+        "Erişim izinleri"
+      ],
+      "evidence_url": "https://www.odtuteknokent.com.tr/"
+    }
+  ],
+  "notes": [
+    "Tüm kayıtlar varsayılan olarak otomatik toplamaya kapalıdır.",
+    "Önceki geniş 24 kaynak envanteri kaynaklar.json içinde tarihsel referans olarak korunur.",
+    "Etiketler scope altında ürünün hedef kavramlarıdır; kaynakta gözlenmiş hashtag iddiası değildir.",
+    "Sürüm 3: web ertelendi; TUI ilk teslimat bağımlılığı değil. Sabit siteler yanında Google sorgularından keşif planlanıyor. LLM yerel veya API olabilir."
+  ]
+}

@@ -1,0 +1,70 @@
+#!/usr/bin/env ruby
+require "bundler/setup"
+require_relative "../lib/radar"
+
+command = ARGV.shift || "help"
+path = ENV.fetch("RADAR_CONFIG", "config/settings.json")
+store = nil
+begin
+  case command
+  when "help", "--help", "-h"
+    puts "radar validate | migrate | once | run | status | review | retry-job ID | unblock-host HOST | resolve-delivery ID sent/retry"
+    puts "Ayar dosyası: RADAR_CONFIG (varsayılan config/settings.json). Sırlar: ortam değişkenleri."
+  when "validate"
+    config = Radar::Config.new(path)
+    puts "Yapılandırma geçerli. Aktif profil: #{config.profiles.size}. Anahtarlar ve bağlantılar test edilmedi."
+  else
+    store = Radar::Store.new(ENV.fetch("DATABASE_URL"))
+    case command
+    when "migrate"
+      store.migrate
+      puts "Veritabanı şeması hazır."
+    when "status", "review"
+      puts JSON.pretty_generate(command == "status" ? store.status : store.review)
+    when "retry-job"
+      store.retry_job(Integer(ARGV.fetch(0)))
+    when "unblock-host"
+      store.unblock_host(ARGV.fetch(0))
+    when "resolve-delivery"
+      store.resolve_delivery(ARGV.fetch(0), ARGV.fetch(1))
+    when "once", "run"
+      config = Radar::Config.new(path)
+      config.check_secrets!
+      store.lock!
+      runner = Radar::Runner.new(config, store)
+      if command == "once"
+        runner.tick
+        puts JSON.pretty_generate(store.status)
+      else
+        api = Radar::API.new(config, store)
+        stopping = false
+        %w[INT TERM].each { |sig| Signal.trap(sig) { stopping = true } }
+        server_thread = Thread.new { api.start }
+        begin
+          until stopping
+            runner.tick
+            5.times { break if stopping; sleep 1 }
+          end
+        ensure
+          api.shutdown
+          server_thread.join
+        end
+      end
+    else
+      abort "Bilinmeyen komut: #{command}. ruby bin/radar help"
+    end
+  end
+rescue KeyError => e
+  warn "Eksik ayar/ortam değişkeni: #{e.key}"
+  exit 1
+rescue PG::Error
+  warn "PostgreSQL işlemi başarısız. DATABASE_URL ve migrate durumunu kontrol edin."
+  exit 1
+rescue StandardError => e
+  # Provider response bodies and connection strings can contain credentials.
+  warn "İşlem başarısız (#{e.class}). Yapılandırma ve servis durumunu kontrol edin."
+  warn e.message if command == "validate"
+  exit 1
+ensure
+  store&.close
+end

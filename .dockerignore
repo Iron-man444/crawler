@@ -1,0 +1,14 @@
+.git
+.tools
+.bundle
+vendor
+.env
+.env.*
+**/*.pem
+**/*.key
+**/*.p12
+**/*.pfx
+**/*.ppk
+config/settings.json
+tmp
+log

@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+require "bundler/setup"
+require_relative "../lib/radar"
+require_relative "../lib/radar/telegram"
+
+begin
+  client = Radar::BotClient.new(ENV.fetch("RADAR_URL", "http://127.0.0.1:8787"), ENV.fetch("RADAR_API_TOKEN"))
+  bot = Radar::Telegram.new(client: client, token: ENV.fetch("TELEGRAM_BOT_TOKEN"), targets: JSON.parse(ENV.fetch("TELEGRAM_TARGETS")))
+  stopping = false
+  %w[INT TERM].each { |sig| Signal.trap(sig) { stopping = true } }
+  until stopping
+    begin
+      active = bot.once
+    rescue Radar::WorkError => e
+      warn "Telegram worker: #{e.code}"
+      active = false
+    end
+    break if ARGV.include?("--once")
+    sleep(active ? 2 : 5)
+  end
+rescue StandardError => e
+  warn "Telegram worker başlatılamadı (#{e.class}). Ortam değişkenlerini kontrol edin."
+  exit 1
+end

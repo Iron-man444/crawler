@@ -1,0 +1,12 @@
+services:
+  telegram-test:
+    image: ruby:3.4-slim
+    working_dir: /app
+    command: ["ruby", "scripts/telegram_test.rb"]
+    environment:
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:?Set TELEGRAM_BOT_TOKEN in .env}
+      TELEGRAM_TARGETS: ${TELEGRAM_TARGETS:?Set TELEGRAM_TARGETS in .env}
+    volumes:
+      - ./scripts/telegram_test.rb:/app/scripts/telegram_test.rb:ro
+      - ./lib/radar/http.rb:/app/lib/radar/http.rb:ro
+      - ./lib/radar/telegram.rb:/app/lib/radar/telegram.rb:ro

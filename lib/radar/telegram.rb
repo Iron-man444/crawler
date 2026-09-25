@@ -54,6 +54,25 @@ module Radar
       out
     end
 
+    # Explicit connection test: no queue, database or LLM dependency; never retry a send.
+    def test_message(target_ref = "main")
+      chat = @targets[target_ref]
+      raise WorkError.new("telegram_target_missing", permanent: true) unless chat
+      begin
+        response = @http.request(:post, "https://api.telegram.org/bot#{@token}/sendMessage",
+          headers: { "Content-Type" => "application/json" },
+          body: JSON.generate(chat_id: chat, text: "✅ Fırsat Radarı test mesajı. Telegram bağlantısı çalışıyor. Bu mesaj tarama ve Gemini analizinden bağımsızdır."))
+        data = JSON.parse(response.body)
+      rescue WorkError, JSON::ParserError
+        raise WorkError.new("telegram_test_delivery_unknown", permanent: true)
+      end
+      unless response.status == 200 && data["ok"] == true && data.dig("result", "message_id")
+        code = data["error_code"].is_a?(Integer) ? data["error_code"] : response.status
+        raise WorkError.new("telegram_test_http_#{code}", permanent: true)
+      end
+      data["result"]["message_id"]
+    end
+
     def once
       job = @client.call("/api/v1/notification-jobs/claim")
       return false unless job

@@ -1,5 +1,32 @@
 # VPS üzerinde web kaynakları → Gemini → Telegram testi
 
+## Kısa kullanım (önerilen)
+
+Yerelde değişiklikleri commit/push yaptıktan sonra VPS'de `git pull --ff-only` çalıştırın.
+
+```bash
+cd ~/crawler
+bash scripts/vps.sh test
+```
+
+Bu komut taramayı, Gemini'yi ve veritabanını beklemeden `main` hedefine açıkça test olarak işaretlenmiş bir mesaj gönderir. İlk kullanımda küçük Ruby Docker imajının indirilmesi gerekebilir. Her çağrı yeni bir test mesajıdır; hata/teslim belirsizliğinde otomatik tekrar göndermez.
+
+Pilotu hazırlayıp başlatmak için:
+
+```bash
+bash scripts/vps.sh start
+```
+
+Bu komut önce Telegram test mesajını gönderir; başarılıysa imajı hazırlar, eski servisleri durdurur, pilot ayarlarını yedekleyerek kurar ve servisleri açar. Mevcut Gemini modelini korur. Model henüz ayarlı değilse `bash scripts/vps.sh start --model MODEL_ID` kullanın. `start` pilot ayarlarını yeniden kurar; sıradan servis restart komutu değildir. Başarısız adımda durur. Model/ayar hatası servisleri durdurduktan sonra oluşursa düzeltip yeniden çalıştırın.
+
+```bash
+bash scripts/vps.sh status
+bash scripts/vps.sh logs
+bash scripts/vps.sh stop
+```
+
+`test` yalnız Telegram bağlantısını doğrular; Gemini ve kaynak taramasının çalıştığını söylemez. Aşağıdaki uzun Docker komutları aynı işlemlerin elle uygulanması içindir; kısa komutlardan sonra tekrar çalıştırmanız gerekmez.
+
 Mevcut `.env` dosyanız korunur. `POSTGRES_PASSWORD`, `RADAR_API_TOKEN`, `GEMINI_API_KEY`, `TELEGRAM_BOT_TOKEN` ve `TELEGRAM_TARGETS` dolu olmalı. `TELEGRAM_TARGETS` örneği: `{"main":"123456789"}`. Botla özel sohbette önce /start gönderin veya botu hedef gruba ekleyin. Yalnız tokenların yazılması chat ID eksikliğini gidermez. Kurulu veritabanının parolasını bu işlem sırasında değiştirmeyin.
 
 ## 1. Yerel PowerShell: değişiklikleri gönder

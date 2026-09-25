@@ -10,6 +10,8 @@ vendor/
 *.pfx
 *.ppk
 config/settings.json
+config/settings.json.backup-*
+config/settings.json.tmp-*
 tmp/
 log/
 __pycache__/

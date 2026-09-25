@@ -1,0 +1,307 @@
+{
+  "listen": "127.0.0.1",
+  "port": 8787,
+  "user_agent": "FirsatRadari/0.1",
+  "host_delay_seconds": 10,
+  "max_jobs_per_tick": 10,
+  "llm": {
+    "provider": "gemini",
+    "model": "SET_MODEL_ID",
+    "api_key_env": "GEMINI_API_KEY",
+    "max_calls_per_day": 40,
+    "chunk_chars": 10000,
+    "max_chunks": 8
+  },
+  "profiles": [
+    {
+      "id": "erp_erp05",
+      "enabled": true,
+      "description": "Türkiye'de ERP kullanabilecek şirketlerin, sanayicilerin, üretim/operasyon/BT/satınalma yöneticilerinin ve endüstri mühendislerinin katılabileceği fuar, festival, kongre, zirve, iş forumu, B2B, tedarikçi günü, networking ve iş ortaklığı buluşmalarını bul. Yalnız ERP kelimesi geçenlerle sınırlama. Eğitim, kurs, bootcamp, sertifika, indirim, yarışma sonuçları ve etkinlikle ilişkisi olmayan genel haberler ilgisizdir. Bir etkinliğin yan programında eğitim bulunması bütün etkinliği ilgisiz yapmaz. Hedef kitleyle ilişkiyi kaynak kanıtına dayandır. MAKTEK Avrasya",
+      "target_ref": "main",
+      "interval_seconds": 21600,
+      "seed_urls": [
+        "https://tuyap.com.tr/fuarlar/maktek-avrasya-fuari"
+      ],
+      "search_queries": [],
+      "allowed_domains": [
+        "tuyap.com.tr"
+      ],
+      "max_pages": 1,
+      "max_depth": 0,
+      "notify_initial": true,
+      "include_words": [],
+      "exclude_words": [],
+      "include_tags": [],
+      "exclude_tags": [],
+      "match_mode": "any",
+      "allowed_types": [],
+      "excluded_types": [
+        "education",
+        "discount"
+      ],
+      "locations": [],
+      "exclude_past_events": true
+    },
+    {
+      "id": "erp_erp07",
+      "enabled": true,
+      "description": "Türkiye'de ERP kullanabilecek şirketlerin, sanayicilerin, üretim/operasyon/BT/satınalma yöneticilerinin ve endüstri mühendislerinin katılabileceği fuar, festival, kongre, zirve, iş forumu, B2B, tedarikçi günü, networking ve iş ortaklığı buluşmalarını bul. Yalnız ERP kelimesi geçenlerle sınırlama. Eğitim, kurs, bootcamp, sertifika, indirim, yarışma sonuçları ve etkinlikle ilişkisi olmayan genel haberler ilgisizdir. Bir etkinliğin yan programında eğitim bulunması bütün etkinliği ilgisiz yapmaz. Hedef kitleyle ilişkiyi kaynak kanıtına dayandır. TEKNOFEST",
+      "target_ref": "main",
+      "interval_seconds": 21600,
+      "seed_urls": [
+        "https://www.teknofest.org/tr/content/teknofest-events/"
+      ],
+      "search_queries": [],
+      "allowed_domains": [
+        "teknofest.org"
+      ],
+      "max_pages": 1,
+      "max_depth": 0,
+      "notify_initial": true,
+      "include_words": [],
+      "exclude_words": [],
+      "include_tags": [],
+      "exclude_tags": [],
+      "match_mode": "any",
+      "allowed_types": [],
+      "excluded_types": [
+        "education",
+        "discount"
+      ],
+      "locations": [],
+      "exclude_past_events": true
+    },
+    {
+      "id": "erp_erp15",
+      "enabled": true,
+      "description": "Türkiye'de ERP kullanabilecek şirketlerin, sanayicilerin, üretim/operasyon/BT/satınalma yöneticilerinin ve endüstri mühendislerinin katılabileceği fuar, festival, kongre, zirve, iş forumu, B2B, tedarikçi günü, networking ve iş ortaklığı buluşmalarını bul. Yalnız ERP kelimesi geçenlerle sınırlama. Eğitim, kurs, bootcamp, sertifika, indirim, yarışma sonuçları ve etkinlikle ilişkisi olmayan genel haberler ilgisizdir. Bir etkinliğin yan programında eğitim bulunması bütün etkinliği ilgisiz yapmaz. Hedef kitleyle ilişkiyi kaynak kanıtına dayandır. TÜSİAD Etkinlik ve Duyurular",
+      "target_ref": "main",
+      "interval_seconds": 21600,
+      "seed_urls": [
+        "https://etkinlik.tusiad.org/index.php?Itemid=122&layout=listing&option=com_acymailing&view=archive"
+      ],
+      "search_queries": [],
+      "allowed_domains": [
+        "etkinlik.tusiad.org"
+      ],
+      "max_pages": 1,
+      "max_depth": 0,
+      "notify_initial": true,
+      "include_words": [],
+      "exclude_words": [],
+      "include_tags": [],
+      "exclude_tags": [],
+      "match_mode": "any",
+      "allowed_types": [],
+      "excluded_types": [
+        "education",
+        "discount"
+      ],
+      "locations": [],
+      "exclude_past_events": true
+    },
+    {
+      "id": "erp_erp01",
+      "enabled": false,
+      "description": "Türkiye'de ERP kullanabilecek şirketlerin, sanayicilerin, üretim/operasyon/BT/satınalma yöneticilerinin ve endüstri mühendislerinin katılabileceği fuar, festival, kongre, zirve, iş forumu, B2B, tedarikçi günü, networking ve iş ortaklığı buluşmalarını bul. Yalnız ERP kelimesi geçenlerle sınırlama. Eğitim, kurs, bootcamp, sertifika, indirim, yarışma sonuçları ve etkinlikle ilişkisi olmayan genel haberler ilgisizdir. Bir etkinliğin yan programında eğitim bulunması bütün etkinliği ilgisiz yapmaz. Hedef kitleyle ilişkiyi kaynak kanıtına dayandır. TOBB Fuar Takvimi",
+      "target_ref": "main",
+      "interval_seconds": 21600,
+      "seed_urls": [
+        "https://fuarlar.tobb.org.tr/FuarTakvimi"
+      ],
+      "search_queries": [],
+      "allowed_domains": [
+        "fuarlar.tobb.org.tr"
+      ],
+      "max_pages": 1,
+      "max_depth": 0,
+      "notify_initial": true,
+      "include_words": [],
+      "exclude_words": [],
+      "include_tags": [],
+      "exclude_tags": [],
+      "match_mode": "any",
+      "allowed_types": [],
+      "excluded_types": [
+        "education",
+        "discount"
+      ],
+      "locations": [],
+      "exclude_past_events": true
+    },
+    {
+      "id": "erp_erp02",
+      "enabled": false,
+      "description": "Türkiye'de ERP kullanabilecek şirketlerin, sanayicilerin, üretim/operasyon/BT/satınalma yöneticilerinin ve endüstri mühendislerinin katılabileceği fuar, festival, kongre, zirve, iş forumu, B2B, tedarikçi günü, networking ve iş ortaklığı buluşmalarını bul. Yalnız ERP kelimesi geçenlerle sınırlama. Eğitim, kurs, bootcamp, sertifika, indirim, yarışma sonuçları ve etkinlikle ilişkisi olmayan genel haberler ilgisizdir. Bir etkinliğin yan programında eğitim bulunması bütün etkinliği ilgisiz yapmaz. Hedef kitleyle ilişkiyi kaynak kanıtına dayandır. TÜYAP",
+      "target_ref": "main",
+      "interval_seconds": 21600,
+      "seed_urls": [
+        "https://tuyap.com.tr/fuar-arama"
+      ],
+      "search_queries": [],
+      "allowed_domains": [
+        "tuyap.com.tr"
+      ],
+      "max_pages": 1,
+      "max_depth": 0,
+      "notify_initial": true,
+      "include_words": [],
+      "exclude_words": [],
+      "include_tags": [],
+      "exclude_tags": [],
+      "match_mode": "any",
+      "allowed_types": [],
+      "excluded_types": [
+        "education",
+        "discount"
+      ],
+      "locations": [],
+      "exclude_past_events": true
+    },
+    {
+      "id": "erp_erp03",
+      "enabled": false,
+      "description": "Türkiye'de ERP kullanabilecek şirketlerin, sanayicilerin, üretim/operasyon/BT/satınalma yöneticilerinin ve endüstri mühendislerinin katılabileceği fuar, festival, kongre, zirve, iş forumu, B2B, tedarikçi günü, networking ve iş ortaklığı buluşmalarını bul. Yalnız ERP kelimesi geçenlerle sınırlama. Eğitim, kurs, bootcamp, sertifika, indirim, yarışma sonuçları ve etkinlikle ilişkisi olmayan genel haberler ilgisizdir. Bir etkinliğin yan programında eğitim bulunması bütün etkinliği ilgisiz yapmaz. Hedef kitleyle ilişkiyi kaynak kanıtına dayandır. İstanbul Fuar Merkezi",
+      "target_ref": "main",
+      "interval_seconds": 21600,
+      "seed_urls": [
+        "https://ifm.com.tr/tr/ifm-fuar-takvimi"
+      ],
+      "search_queries": [],
+      "allowed_domains": [
+        "ifm.com.tr"
+      ],
+      "max_pages": 1,
+      "max_depth": 0,
+      "notify_initial": true,
+      "include_words": [],
+      "exclude_words": [],
+      "include_tags": [],
+      "exclude_tags": [],
+      "match_mode": "any",
+      "allowed_types": [],
+      "excluded_types": [
+        "education",
+        "discount"
+      ],
+      "locations": [],
+      "exclude_past_events": true
+    },
+    {
+      "id": "erp_erp08",
+      "enabled": false,
+      "description": "Türkiye'de ERP kullanabilecek şirketlerin, sanayicilerin, üretim/operasyon/BT/satınalma yöneticilerinin ve endüstri mühendislerinin katılabileceği fuar, festival, kongre, zirve, iş forumu, B2B, tedarikçi günü, networking ve iş ortaklığı buluşmalarını bul. Yalnız ERP kelimesi geçenlerle sınırlama. Eğitim, kurs, bootcamp, sertifika, indirim, yarışma sonuçları ve etkinlikle ilişkisi olmayan genel haberler ilgisizdir. Bir etkinliğin yan programında eğitim bulunması bütün etkinliği ilgisiz yapmaz. Hedef kitleyle ilişkiyi kaynak kanıtına dayandır. İstanbul Sanayi Odası",
+      "target_ref": "main",
+      "interval_seconds": 21600,
+      "seed_urls": [
+        "https://eoda.iso.org.tr/seminer/seminerlistesi"
+      ],
+      "search_queries": [],
+      "allowed_domains": [
+        "eoda.iso.org.tr"
+      ],
+      "max_pages": 1,
+      "max_depth": 0,
+      "notify_initial": true,
+      "include_words": [],
+      "exclude_words": [],
+      "include_tags": [],
+      "exclude_tags": [],
+      "match_mode": "any",
+      "allowed_types": [],
+      "excluded_types": [
+        "education",
+        "discount"
+      ],
+      "locations": [],
+      "exclude_past_events": true
+    },
+    {
+      "id": "erp_erp09",
+      "enabled": false,
+      "description": "Türkiye'de ERP kullanabilecek şirketlerin, sanayicilerin, üretim/operasyon/BT/satınalma yöneticilerinin ve endüstri mühendislerinin katılabileceği fuar, festival, kongre, zirve, iş forumu, B2B, tedarikçi günü, networking ve iş ortaklığı buluşmalarını bul. Yalnız ERP kelimesi geçenlerle sınırlama. Eğitim, kurs, bootcamp, sertifika, indirim, yarışma sonuçları ve etkinlikle ilişkisi olmayan genel haberler ilgisizdir. Bir etkinliğin yan programında eğitim bulunması bütün etkinliği ilgisiz yapmaz. Hedef kitleyle ilişkiyi kaynak kanıtına dayandır. Ankara Sanayi Odası",
+      "target_ref": "main",
+      "interval_seconds": 21600,
+      "seed_urls": [
+        "https://www.aso.org.tr/"
+      ],
+      "search_queries": [],
+      "allowed_domains": [
+        "aso.org.tr"
+      ],
+      "max_pages": 1,
+      "max_depth": 0,
+      "notify_initial": true,
+      "include_words": [],
+      "exclude_words": [],
+      "include_tags": [],
+      "exclude_tags": [],
+      "match_mode": "any",
+      "allowed_types": [],
+      "excluded_types": [
+        "education",
+        "discount"
+      ],
+      "locations": [],
+      "exclude_past_events": true
+    },
+    {
+      "id": "erp_erp10",
+      "enabled": false,
+      "description": "Türkiye'de ERP kullanabilecek şirketlerin, sanayicilerin, üretim/operasyon/BT/satınalma yöneticilerinin ve endüstri mühendislerinin katılabileceği fuar, festival, kongre, zirve, iş forumu, B2B, tedarikçi günü, networking ve iş ortaklığı buluşmalarını bul. Yalnız ERP kelimesi geçenlerle sınırlama. Eğitim, kurs, bootcamp, sertifika, indirim, yarışma sonuçları ve etkinlikle ilişkisi olmayan genel haberler ilgisizdir. Bir etkinliğin yan programında eğitim bulunması bütün etkinliği ilgisiz yapmaz. Hedef kitleyle ilişkiyi kaynak kanıtına dayandır. Bursa Ticaret ve Sanayi Odası",
+      "target_ref": "main",
+      "interval_seconds": 21600,
+      "seed_urls": [
+        "https://www.btso.org.tr/guncel/haberler-ve-duyurular/etkinlik-takvimi"
+      ],
+      "search_queries": [],
+      "allowed_domains": [
+        "btso.org.tr"
+      ],
+      "max_pages": 1,
+      "max_depth": 0,
+      "notify_initial": true,
+      "include_words": [],
+      "exclude_words": [],
+      "include_tags": [],
+      "exclude_tags": [],
+      "match_mode": "any",
+      "allowed_types": [],
+      "excluded_types": [
+        "education",
+        "discount"
+      ],
+      "locations": [],
+      "exclude_past_events": true
+    },
+    {
+      "id": "erp_erp19",
+      "enabled": false,
+      "description": "Türkiye'de ERP kullanabilecek şirketlerin, sanayicilerin, üretim/operasyon/BT/satınalma yöneticilerinin ve endüstri mühendislerinin katılabileceği fuar, festival, kongre, zirve, iş forumu, B2B, tedarikçi günü, networking ve iş ortaklığı buluşmalarını bul. Yalnız ERP kelimesi geçenlerle sınırlama. Eğitim, kurs, bootcamp, sertifika, indirim, yarışma sonuçları ve etkinlikle ilişkisi olmayan genel haberler ilgisizdir. Bir etkinliğin yan programında eğitim bulunması bütün etkinliği ilgisiz yapmaz. Hedef kitleyle ilişkiyi kaynak kanıtına dayandır. ST Endüstri",
+      "target_ref": "main",
+      "interval_seconds": 21600,
+      "seed_urls": [
+        "https://www.stendustri.com.tr/"
+      ],
+      "search_queries": [],
+      "allowed_domains": [
+        "stendustri.com.tr"
+      ],
+      "max_pages": 1,
+      "max_depth": 0,
+      "notify_initial": true,
+      "include_words": [],
+      "exclude_words": [],
+      "include_tags": [],
+      "exclude_tags": [],
+      "match_mode": "any",
+      "allowed_types": [],
+      "excluded_types": [
+        "education",
+        "discount"
+      ],
+      "locations": [],
+      "exclude_past_events": true
+    }
+  ]
+}

@@ -19,7 +19,7 @@ Pilotu hazırlayıp başlatmak için:
 bash scripts/vps.sh start
 ```
 
-Bu komut önce Telegram test mesajını gönderir; başarılıysa imajı hazırlar, eski servisleri durdurur, pilot ayarlarını yedekleyerek kurar ve servisleri açar. Mevcut Gemini modelini korur. Model henüz ayarlı değilse `bash scripts/vps.sh start --model MODEL_ID` kullanın. `start` pilot ayarlarını yeniden kurar; sıradan servis restart komutu değildir. Başarısız adımda durur. Model/ayar hatası servisleri durdurduktan sonra oluşursa düzeltip yeniden çalıştırın.
+Bu komut önce Telegram test mesajını gönderir; başarılıysa pilot ayarlarını yedekleyerek hazırlar, doğrular ve servis imajlarını derler. Bunlar başarılı olduktan sonra eski servisleri durdurup yenilerini açar. Böylece kurulum seçeneği, model veya derleme hatası çalışan servisleri durdurmaz. Mevcut sağlayıcı ve model korunur. Model henüz ayarlı değilse `bash scripts/vps.sh start --model MODEL_ID` kullanın. `start` pilot ayarlarını yeniden kurar; sıradan servis restart komutu değildir. Başarısız adımda durur. Yeni servislerin başlatılması sırasında oluşan hatalar için otomatik geri alma yoktur.
 
 ```bash
 bash scripts/vps.sh status

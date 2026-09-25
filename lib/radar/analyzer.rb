@@ -75,12 +75,12 @@ module Radar
         headers = { "x-goog-api-key" => key, "Content-Type" => "application/json" }
         body = { "systemInstruction" => { "parts" => [{ "text" => system }] },
                  "contents" => [{ "role" => "user", "parts" => [{ "text" => user }] }],
-                 "generationConfig" => { "responseMimeType" => "application/json", "responseJsonSchema" => SCHEMA, "maxOutputTokens" => 8192 } }
+                 "generationConfig" => { "responseMimeType" => "application/json", "responseJsonSchema" => SCHEMA, "maxOutputTokens" => @settings.fetch("max_output_tokens", 8192) } }
       else
         url = "https://api.mistral.ai/v1/chat/completions"
         headers = { "Authorization" => "Bearer #{key}", "Content-Type" => "application/json" }
         body = { "model" => model, "messages" => [{ "role" => "system", "content" => system }, { "role" => "user", "content" => user }],
-                 "max_tokens" => 8192, "response_format" => { "type" => "json_schema", "json_schema" => { "name" => "radar_items", "strict" => true, "schema" => SCHEMA } } }
+                 "max_tokens" => @settings.fetch("max_output_tokens", 8192), "response_format" => { "type" => "json_schema", "json_schema" => { "name" => "radar_items", "strict" => true, "schema" => SCHEMA } } }
       end
       response = HTTP.check!(@http.request(:post, url, headers: headers, body: JSON.generate(body)))
       envelope = JSON.parse(response.body)

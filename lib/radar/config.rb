@@ -20,6 +20,8 @@ module Radar
       integer!(llm["max_calls_per_day"], 1..100000, "max_calls_per_day")
       integer!(llm["chunk_chars"], 1000..30000, "chunk_chars")
       integer!(llm["max_chunks"], 1..20, "max_chunks")
+      integer!(llm["min_interval_seconds"], 1..3600, "min_interval_seconds") if llm.key?("min_interval_seconds")
+      integer!(llm["max_output_tokens"], 256..8192, "max_output_tokens") if llm.key?("max_output_tokens")
       raise "profiles dizi olmalı" unless self["profiles"].is_a?(Array)
       ids = self["profiles"].map { |p| p["id"] }
       raise "Profil ID tekrar ediyor" unless ids.uniq == ids

@@ -1,0 +1,807 @@
+{
+  "schema_version": 1,
+  "research_date": "2026-09-25",
+  "purpose": "50 web kaynağı adayı; toplu canlı erişim henüz test edilmedi. setup_pilot.rb --sources 50 ile çalışma ayarları üretilebilir.",
+  "sources": [
+    {
+      "id": "ERP01",
+      "name": "TOBB Fuar Takvimi",
+      "url": "https://fuarlar.tobb.org.tr/FuarTakvimi",
+      "host": "fuarlar.tobb.org.tr",
+      "priority": "P0",
+      "note": "Türkiye genelinde sektör, şehir ve organizatör keşfi",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://fuarlar.tobb.org.tr/FuarTakvimi"
+      ],
+      "checked_at": "2026-09-24",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP02",
+      "name": "TÜYAP",
+      "url": "https://tuyap.com.tr/fuar-arama",
+      "host": "tuyap.com.tr",
+      "priority": "P0",
+      "note": "Makine, ambalaj, plastik ve çok sektörlü fuarlar",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://tuyap.com.tr/fuar-arama"
+      ],
+      "checked_at": "2026-09-24",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP03",
+      "name": "İstanbul Fuar Merkezi",
+      "url": "https://ifm.com.tr/tr/ifm-fuar-takvimi",
+      "host": "ifm.com.tr",
+      "priority": "P0",
+      "note": "Çok sektörlü fuar takvimi",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://ifm.com.tr/tr/ifm-fuar-takvimi"
+      ],
+      "checked_at": "2026-09-24",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP04",
+      "name": "WIN EURASIA",
+      "url": "https://www.win-eurasia.com/",
+      "host": "www.win-eurasia.com",
+      "priority": "P0",
+      "note": "Üretim ve otomasyon; Haziran 2026 etkinliği geçmiş",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://www.win-eurasia.com/"
+      ],
+      "checked_at": "2026-09-24",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP05",
+      "name": "MAKTEK Avrasya",
+      "url": "https://www.maktekfuari.com/basin",
+      "host": "www.maktekfuari.com",
+      "priority": "P0",
+      "note": "Makine, metal işleme ve imalat",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://www.maktekfuari.com/basin"
+      ],
+      "checked_at": "2026-09-24",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP06",
+      "name": "SAHA EXPO",
+      "url": "https://www.sahaexpo.com/",
+      "host": "www.sahaexpo.com",
+      "priority": "P1",
+      "note": "Savunma tedarikçileri ve B2B; Mayıs 2026 etkinliği geçmiş",
+      "verification": "page_read",
+      "evidence_urls": [
+        "https://www.sahaexpo.com/"
+      ],
+      "checked_at": "2026-09-24",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP07",
+      "name": "TEKNOFEST",
+      "url": "https://www.teknofest.org/tr/duyurular/",
+      "host": "www.teknofest.org",
+      "priority": "P1",
+      "note": "Teknoloji ve girişimler; yarışma sonuçlarını ayır",
+      "verification": "page_read",
+      "evidence_urls": [
+        "https://www.teknofest.org/tr/duyurular/"
+      ],
+      "checked_at": "2026-09-24",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP08",
+      "name": "İstanbul Sanayi Odası",
+      "url": "https://eoda.iso.org.tr/seminer/seminerlistesi",
+      "host": "eoda.iso.org.tr",
+      "priority": "P0",
+      "note": "Sanayici ve teknoloji tedarikçisi buluşmaları; eğitimleri ayır",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://eoda.iso.org.tr/seminer/seminerlistesi"
+      ],
+      "checked_at": "2026-09-24",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP09",
+      "name": "Ankara Sanayi Odası",
+      "url": "https://www.aso.org.tr/",
+      "host": "www.aso.org.tr",
+      "priority": "P0",
+      "note": "İmalat, B2B ve sanayici duyuruları",
+      "verification": "page_read",
+      "evidence_urls": [
+        "https://www.aso.org.tr/"
+      ],
+      "checked_at": "2026-09-24",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP10",
+      "name": "Bursa Ticaret ve Sanayi Odası",
+      "url": "https://www.btso.org.tr/guncel/haberler-ve-duyurular/etkinlik-takvimi",
+      "host": "www.btso.org.tr",
+      "priority": "P0",
+      "note": "Sanayi, tedarikçi günleri ve iş görüşmeleri",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://www.btso.org.tr/guncel/haberler-ve-duyurular/etkinlik-takvimi"
+      ],
+      "checked_at": "2026-09-24",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP11",
+      "name": "OSBÜK",
+      "url": "https://osbuk.org/view/duyuru/arsivsonuc.php",
+      "host": "osbuk.org",
+      "priority": "P1",
+      "note": "OSB ve sanayi duyuruları; mevzuat haberlerini ayır",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://osbuk.org/view/duyuru/arsivsonuc.php"
+      ],
+      "checked_at": "2026-09-24",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP12",
+      "name": "OSTİM OSB",
+      "url": "https://www.ostim.org.tr/duyurular",
+      "host": "www.ostim.org.tr",
+      "priority": "P0",
+      "note": "KOBİ, üretici, kümelenme ve iş birliği",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://www.ostim.org.tr/duyurular"
+      ],
+      "checked_at": "2026-09-24",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP13",
+      "name": "Ege Bölgesi Sanayi Odası",
+      "url": "https://www.ebso.org.tr/duyurular/ebso-duyurulari",
+      "host": "www.ebso.org.tr",
+      "priority": "P1",
+      "note": "Ege sanayicilerinin duyuruları",
+      "verification": "page_read",
+      "evidence_urls": [
+        "https://www.ebso.org.tr/duyurular/ebso-duyurulari"
+      ],
+      "checked_at": "2026-09-24",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP14",
+      "name": "DEİK",
+      "url": "https://www.deik.org.tr/",
+      "host": "www.deik.org.tr",
+      "priority": "P1",
+      "note": "İş forumları, ticaret heyetleri, B2B; Türkiye yer filtresi",
+      "verification": "page_read",
+      "evidence_urls": [
+        "https://www.deik.org.tr/"
+      ],
+      "checked_at": "2026-09-24",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP15",
+      "name": "TÜSİAD Etkinlik ve Duyurular",
+      "url": "https://etkinlik.tusiad.org/index.php?Itemid=122&layout=listing&option=com_acymailing&view=archive",
+      "host": "etkinlik.tusiad.org",
+      "priority": "P0",
+      "note": "Teknoloji liderleri ve dijital dönüşüm; üyelik koşullarını kontrol et",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://etkinlik.tusiad.org/index.php?Itemid=122&layout=listing&option=com_acymailing&view=archive"
+      ],
+      "checked_at": "2026-09-24",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP16",
+      "name": "TÜSİAD SD²",
+      "url": "https://tusiadsd2.org/",
+      "host": "tusiadsd2.org",
+      "priority": "P0",
+      "note": "Teknoloji kullanıcıları ve tedarikçilerin eşleşmesi",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://tusiadsd2.org/"
+      ],
+      "checked_at": "2026-09-24",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP17",
+      "name": "MMO Makina Portal",
+      "url": "https://makina.mmo.org.tr/Haberler",
+      "host": "makina.mmo.org.tr",
+      "priority": "P1",
+      "note": "Endüstri-işletme mühendisliği kurultayları ve mesleki buluşmalar",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://makina.mmo.org.tr/Haberler"
+      ],
+      "checked_at": "2026-09-24",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP18",
+      "name": "KalDer",
+      "url": "https://www.kalder.org/",
+      "host": "www.kalder.org",
+      "priority": "P1",
+      "note": "Kalite, süreç yönetimi ve kurumsal dönüşüm kongreleri",
+      "verification": "page_read",
+      "evidence_urls": [
+        "https://www.kalder.org/"
+      ],
+      "checked_at": "2026-09-24",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP19",
+      "name": "ST Endüstri",
+      "url": "https://www.stendustri.com.tr/",
+      "host": "www.stendustri.com.tr",
+      "priority": "P0",
+      "note": "Fabrika, otomasyon ve ERP; ürün haberlerini ayır",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://www.stendustri.com.tr/"
+      ],
+      "checked_at": "2026-09-24",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP20",
+      "name": "Endüstri Otomasyon",
+      "url": "https://www.endustriotomasyon.com/",
+      "host": "www.endustriotomasyon.com",
+      "priority": "P1",
+      "note": "Sanayi fuarları ve otomasyon sektörü yayını",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://www.endustriotomasyon.com/"
+      ],
+      "checked_at": "2026-09-24",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP21",
+      "name": "Ekonomim İş Dünyası",
+      "url": "https://www.ekonomim.com/is-dunyasi",
+      "host": "www.ekonomim.com",
+      "priority": "P1",
+      "note": "Bölgesel iş dünyası ve şirket haberleri",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://www.ekonomim.com/is-dunyasi"
+      ],
+      "checked_at": "2026-09-24",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP22",
+      "name": "Dünya İş Dünyası",
+      "url": "https://www.dunya.com/is-dunyasi",
+      "host": "www.dunya.com",
+      "priority": "P1",
+      "note": "İş dünyası ve sektör haberleri; geniş içerik",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://www.dunya.com/is-dunyasi"
+      ],
+      "checked_at": "2026-09-24",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP23",
+      "name": "Robot Yatırımları ve Bakım 4.0",
+      "url": "https://www.robotyatirimlari.com/",
+      "host": "www.robotyatirimlari.com",
+      "priority": "P0",
+      "note": "Fabrika, bakım ve satınalma yöneticileri; Mayıs 2026 etkinliği geçmiş",
+      "verification": "page_read",
+      "evidence_urls": [
+        "https://www.robotyatirimlari.com/"
+      ],
+      "checked_at": "2026-09-24",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP24",
+      "name": "Endüstri 4.0 ve Bakım 4.0",
+      "url": "https://www.endustri40zirvesi.com/",
+      "host": "www.endustri40zirvesi.com",
+      "priority": "P1",
+      "note": "Robot Yatırımları ile aynı program; tekrar riski",
+      "verification": "page_read",
+      "evidence_urls": [
+        "https://www.endustri40zirvesi.com/"
+      ],
+      "checked_at": "2026-09-24",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP25",
+      "name": "İTO Yan Sanayi Borsası",
+      "url": "https://yansanayi.ito.org.tr/",
+      "host": "yansanayi.ito.org.tr",
+      "priority": "P2",
+      "note": "Tedarikçi günleri ve üretici eşleşmeleri; Kommunity erişimi doğrulanamadığı için 50 kaynak paketinde bununla değiştirildi.",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://yansanayi.ito.org.tr/"
+      ],
+      "checked_at": "2026-09-25",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP26",
+      "name": "İZFAŞ",
+      "url": "https://www.izfas.com.tr/fuar-ve-etkinlik-takvimi-fair-and-event-calendar",
+      "host": "www.izfas.com.tr",
+      "priority": "P1",
+      "note": "Fuar ve etkinlik takvimi",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://www.izfas.com.tr/fuar-ve-etkinlik-takvimi-fair-and-event-calendar"
+      ],
+      "checked_at": "2026-09-25",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP27",
+      "name": "KFA Fuarcılık",
+      "url": "https://www.kfa.com.tr/",
+      "host": "www.kfa.com.tr",
+      "priority": "P1",
+      "note": "Sanayi fuarları ve iş gezileri",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://www.kfa.com.tr/"
+      ],
+      "checked_at": "2026-09-25",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP28",
+      "name": "Tarsus Turkey",
+      "url": "https://www.tarsusturkey.com/haberler.html?p=2",
+      "host": "www.tarsusturkey.com",
+      "priority": "P1",
+      "note": "Fuar duyuruları; eski arşiv ve yönlendirme kontrolü gerekir",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://www.tarsusturkey.com/haberler.html?p=2"
+      ],
+      "checked_at": "2026-09-25",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP29",
+      "name": "Plast Eurasia",
+      "url": "https://plasteurasia.com/e-bilet",
+      "host": "plasteurasia.com",
+      "priority": "P1",
+      "note": "Plastik endüstrisi fuarı; sayfalar arasında tarih/yer tutarlılığı kontrol edilmeli Giriş URL'si sayfa testinde kontrol edilmeli.",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://plasteurasia.com/e-bilet"
+      ],
+      "checked_at": "2026-09-25",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP30",
+      "name": "Intermob",
+      "url": "https://intermobistanbul.com/",
+      "host": "intermobistanbul.com",
+      "priority": "P1",
+      "note": "Mobilya yan sanayi; mevcut Eylül etkinliği geçmiş",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://intermobistanbul.com/"
+      ],
+      "checked_at": "2026-09-25",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP31",
+      "name": "Automechanika katılımcıları",
+      "url": "https://www.automechanikaistanbulplus.com/participants",
+      "host": "www.automechanikaistanbulplus.com",
+      "priority": "P1",
+      "note": "Otomotiv tedarikçileri; liste tek başına yeni etkinlik sayılmaz",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://www.automechanikaistanbulplus.com/participants"
+      ],
+      "checked_at": "2026-09-25",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP32",
+      "name": "Metal Expo",
+      "url": "https://www.metalexpo.com.tr/",
+      "host": "www.metalexpo.com.tr",
+      "priority": "P1",
+      "note": "Metal ve çelik; mevcut Eylül etkinliği geçmiş",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://www.metalexpo.com.tr/"
+      ],
+      "checked_at": "2026-09-25",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP33",
+      "name": "ISK-SODEX",
+      "url": "https://www.sodex.com.tr/en",
+      "host": "www.sodex.com.tr",
+      "priority": "P1",
+      "note": "İklimlendirme üreticileri; Türkiye etkinlikleri seçilmeli",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://www.sodex.com.tr/en"
+      ],
+      "checked_at": "2026-09-25",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP34",
+      "name": "MÜSİAD Expo",
+      "url": "https://musiadexpo.com/tr/fuar-kunyesi",
+      "host": "musiadexpo.com",
+      "priority": "P1",
+      "note": "Çok sektörlü iş dünyası fuarı",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://musiadexpo.com/tr/fuar-kunyesi"
+      ],
+      "checked_at": "2026-09-25",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP35",
+      "name": "İstanbul Ticaret Odası",
+      "url": "https://www.ito.org.tr/tr/etkinlikler/?page=1",
+      "host": "www.ito.org.tr",
+      "priority": "P1",
+      "note": "İş dünyası etkinlikleri",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://www.ito.org.tr/tr/etkinlikler/?page=1"
+      ],
+      "checked_at": "2026-09-25",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP36",
+      "name": "Ankara Ticaret Odası",
+      "url": "https://www.atonet.org.tr/EtkinlikArsivi",
+      "host": "www.atonet.org.tr",
+      "priority": "P1",
+      "note": "Etkinlik ve iş heyeti duyuruları",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://www.atonet.org.tr/EtkinlikArsivi"
+      ],
+      "checked_at": "2026-09-25",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP37",
+      "name": "Kayseri Sanayi Odası",
+      "url": "https://www.kayso.org.tr/tr/Sayfa/TumDuyurular",
+      "host": "www.kayso.org.tr",
+      "priority": "P1",
+      "note": "Sanayici duyuruları; güncel liste yolu ayrıca kontrol edilmeli",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://www.kayso.org.tr/tr/Sayfa/TumDuyurular?SayfaNo=3"
+      ],
+      "checked_at": "2026-09-25",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP38",
+      "name": "İzmir Ticaret Odası fuar organizasyonları",
+      "url": "https://eportal.izto.org.tr/web/ucak_org.aspx",
+      "host": "eportal.izto.org.tr",
+      "priority": "P1",
+      "note": "Fuar ziyaretleri; üyelik/kayıt işlemleri yapılmaz",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://eportal.izto.org.tr/web/ucak_org.aspx"
+      ],
+      "checked_at": "2026-09-25",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP39",
+      "name": "Eskişehir Ticaret Odası",
+      "url": "https://www.etonet.org.tr/arama",
+      "host": "www.etonet.org.tr",
+      "priority": "P1",
+      "note": "Bölgesel ticaret ve fuar duyuruları",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://www.etonet.org.tr/arama"
+      ],
+      "checked_at": "2026-09-25",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP40",
+      "name": "İTÜ Etkinlik",
+      "url": "https://etkinlikler.itu.edu.tr/",
+      "host": "etkinlikler.itu.edu.tr",
+      "priority": "P1",
+      "note": "Mühendislik ve sanayi ilişkili etkinlikler; eğitim ve sosyal etkinlikleri ele",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://etkinlikler.itu.edu.tr/"
+      ],
+      "checked_at": "2026-09-25",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP41",
+      "name": "Eskişehir Sanayi Odası",
+      "url": "https://etkinlik.eso.org.tr/",
+      "host": "etkinlik.eso.org.tr",
+      "priority": "P1",
+      "note": "Sanayi buluşmaları; eğitimleri ele",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://etkinlik.eso.org.tr/"
+      ],
+      "checked_at": "2026-09-25",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP42",
+      "name": "Konya Sanayi Odası",
+      "url": "https://kso.org.tr/tr-TR/Media/Announcement",
+      "host": "kso.org.tr",
+      "priority": "P1",
+      "note": "İmalat ve sanayici duyuruları",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://kso.org.tr/tr-TR/Media/Announcement"
+      ],
+      "checked_at": "2026-09-25",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP43",
+      "name": "Denizli Sanayi Odası",
+      "url": "https://dso.tr/duyurular",
+      "host": "dso.tr",
+      "priority": "P1",
+      "note": "Bölgesel sanayi ve dijital dönüşüm",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://dso.tr/duyurular"
+      ],
+      "checked_at": "2026-09-25",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP44",
+      "name": "PAGEV",
+      "url": "https://pagev.net/haberler",
+      "host": "pagev.net",
+      "priority": "P1",
+      "note": "Plastik üreticileri ve kongre/fuar haberleri",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://pagev.net/haberler"
+      ],
+      "checked_at": "2026-09-25",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP45",
+      "name": "TAYSAD",
+      "url": "https://www.taysad.org.tr/tr/haberler",
+      "host": "www.taysad.org.tr",
+      "priority": "P1",
+      "note": "Otomotiv tedarikçi günleri ve iş birlikleri",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://www.taysad.org.tr/tr/haberler"
+      ],
+      "checked_at": "2026-09-25",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP46",
+      "name": "Makina İmalatçıları Birliği",
+      "url": "https://mib.org.tr/haberler/",
+      "host": "mib.org.tr",
+      "priority": "P1",
+      "note": "Makine üreticileri ve sanayi buluşmaları",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://mib.org.tr/haberler/"
+      ],
+      "checked_at": "2026-09-25",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP47",
+      "name": "UTİKAD",
+      "url": "https://www.utikad.org.tr/Duyurular?Baslik=Genel&KatID=1",
+      "host": "www.utikad.org.tr",
+      "priority": "P1",
+      "note": "Lojistik, tedarik zinciri ve sektör buluşmaları",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://www.utikad.org.tr/Duyurular?Baslik=Genel&KatID=1"
+      ],
+      "checked_at": "2026-09-25",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP48",
+      "name": "UKAT",
+      "url": "https://ukat.org.tr/haberler",
+      "host": "ukat.org.tr",
+      "priority": "P1",
+      "note": "Lojistik ve ticaret forumları; eski duyuruları ele",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://ukat.org.tr/haberler"
+      ],
+      "checked_at": "2026-09-25",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP49",
+      "name": "SATSO",
+      "url": "https://www.satso.org.tr/Duyurular.aspx?Sayfa=1",
+      "host": "www.satso.org.tr",
+      "priority": "P1",
+      "note": "Sakarya üretim ve ticaret duyuruları",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://www.satso.org.tr/Duyurular.aspx?Sayfa=1"
+      ],
+      "checked_at": "2026-09-25",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    },
+    {
+      "id": "ERP50",
+      "name": "TİM",
+      "url": "https://www.tim.org.tr/tr/duyurular",
+      "host": "www.tim.org.tr",
+      "priority": "P1",
+      "note": "İhracat ve ticaret etkinlikleri; Türkiye filtresi",
+      "verification": "search_index",
+      "evidence_urls": [
+        "https://www.tim.org.tr/tr/duyurular"
+      ],
+      "checked_at": "2026-09-25",
+      "enabled": false,
+      "crawler_tested": false,
+      "access_review": "not_verified"
+    }
+  ]
+}

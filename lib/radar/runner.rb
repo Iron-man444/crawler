@@ -4,7 +4,7 @@ module Radar
       @config, @store, @http, @log = config, store, http, logger
       @analyzer = Analyzer.new(config["llm"], http: http, cache: store, budget: lambda {
         provider_host = config["llm"]["provider"] == "gemini" ? "generativelanguage.googleapis.com" : "api.mistral.ai"
-        store.reserve_host(provider_host, config["host_delay_seconds"])
+        store.reserve_host(provider_host, config["llm"].fetch("min_interval_seconds", config["host_delay_seconds"]))
         store.budget!(config["llm"]["provider"], config["llm"]["max_calls_per_day"])
       })
     end

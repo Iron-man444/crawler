@@ -4,11 +4,14 @@ require "fileutils"
 require "json"
 require "open3"
 require "rbconfig"
+require_relative "../lib/radar/http"
+require_relative "../lib/radar/config"
 
 class SetupPilotTest < Minitest::Test
   def test_setup_requires_model_preserves_secrets_and_can_expand
     Dir.mktmpdir do |root|
-      FileUtils.mkdir_p(["#{root}/scripts", "#{root}/config"])
+      FileUtils.mkdir_p(["#{root}/scripts", "#{root}/config", "#{root}/arastirma"])
+      FileUtils.cp(File.expand_path("../arastirma/erp_50_kaynak.json", __dir__), "#{root}/arastirma/")
       FileUtils.cp(File.expand_path("../scripts/setup_pilot.rb", __dir__), "#{root}/scripts/")
       FileUtils.cp(File.expand_path("../config/settings.pilot.json", __dir__), "#{root}/config/")
       File.write("#{root}/.env", "PRIVATE_SENTINEL=unchanged\n")
@@ -31,6 +34,25 @@ class SetupPilotTest < Minitest::Test
       refute_nil backup
       assert_equal first, File.read("#{root}/config/#{backup}")
       assert_equal "PRIVATE_SENTINEL=unchanged\n", File.read("#{root}/.env")
+      _, _, status = Open3.capture3(RbConfig.ruby, script, "--provider", "mistral", "--sources", "50", "--daily-calls", "200")
+      assert status.success?
+      config = JSON.parse(File.read("#{root}/config/settings.json"))
+      assert_equal "mistral", config.dig("llm", "provider")
+      assert_equal "MISTRAL_API_KEY", config.dig("llm", "api_key_env")
+      assert_equal "mistral-small-2603", config.dig("llm", "model")
+      assert_equal 50, config["profiles"].size
+      assert_equal 50, Radar::Config.new("#{root}/config/settings.json").profiles.size
+      assert config["profiles"].all? { |p| p["enabled"] && p["interval_seconds"] == 1800 && p["search_queries"].empty? }
+      assert_equal 200, config.dig("llm", "max_calls_per_day")
+      assert_equal 60, config.dig("llm", "min_interval_seconds")
+      assert_equal 4096, config.dig("llm", "max_output_tokens")
+      prior = File.read("#{root}/config/settings.json")
+      _, _, status = Open3.capture3(RbConfig.ruby, script, "--interval", "0")
+      refute status.success?
+      assert_equal prior, File.read("#{root}/config/settings.json")
+      _, _, status = Open3.capture3(RbConfig.ruby, script, "--sources", "50")
+      assert status.success?
+      assert_equal "mistral", JSON.parse(File.read("#{root}/config/settings.json")).dig("llm", "provider")
     end
   end
 end

@@ -198,7 +198,8 @@ module Radar
     end
 
     def status
-      { "jobs" => query("SELECT state,count(*)::integer AS count FROM radar_jobs GROUP BY state"),
+        { "jobs" => query("SELECT state,count(*)::integer AS count FROM radar_jobs GROUP BY state"),
+          "waiting_jobs" => query("SELECT id,kind,profile_id,attempts,error,available_at FROM radar_jobs WHERE state='pending' ORDER BY available_at,id LIMIT 20"),
         "notifications" => query("SELECT state,count(*)::integer AS count FROM radar_outbox GROUP BY state"),
         "items" => query("SELECT decision,count(*)::integer AS count FROM radar_items GROUP BY decision"),
         "usage_today" => query("SELECT provider,calls FROM radar_usage WHERE day=CURRENT_DATE") }

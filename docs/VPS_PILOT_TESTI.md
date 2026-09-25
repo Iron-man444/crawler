@@ -1,5 +1,7 @@
 # VPS üzerinde web kaynakları → Gemini → Telegram testi
 
+50 kaynak ve Mistral için güncel komut: `bash scripts/vps.sh start --provider mistral --model mistral-small-2603 --sources 50`. [Kapasite, bütçe ve kaynak listesi](50_KAYNAK_KAPASITE.md). Sağlayıcı seçilmezse mevcut sağlayıcı korunur; aşağıdaki Gemini örnekleri ilk pilot içindir.
+
 ## Kısa kullanım (önerilen)
 
 Yerelde değişiklikleri commit/push yaptıktan sonra VPS'de `git pull --ff-only` çalıştırın.

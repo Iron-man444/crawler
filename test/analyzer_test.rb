@@ -3,17 +3,19 @@ require_relative "test_helper"
 class AnalyzerTest < Minitest::Test
   def test_both_provider_contracts
     %w[gemini mistral].each do |provider|
-      settings = config["llm"].merge("provider" => provider, "model" => "test-model", "api_key_env" => "RADAR_TEST_KEY")
+      settings = config["llm"].merge("provider" => provider, "model" => "test-model", "api_key_env" => "RADAR_TEST_KEY", "max_output_tokens" => 4096)
       ENV["RADAR_TEST_KEY"] = "fake-not-a-secret"
       expected = item.slice(*Radar::Analyzer::FIELDS)
       fake = FakeHTTP.new do |_, _, args|
         body = JSON.parse(args[:body])
         if provider == "gemini"
           assert_equal "application/json", body.dig("generationConfig", "responseMimeType")
+          assert_equal 4096, body.dig("generationConfig", "maxOutputTokens")
           assert body.dig("generationConfig", "responseJsonSchema", "properties", "items")
           envelope = { "candidates" => [{ "finishReason" => "STOP", "content" => { "parts" => [{ "text" => JSON.generate("items" => [expected]) }] } }] }
         else
           assert_equal "json_schema", body.dig("response_format", "type")
+          assert_equal 4096, body["max_tokens"]
           envelope = { "choices" => [{ "finish_reason" => "stop", "message" => { "content" => JSON.generate("items" => [expected]) } }] }
         end
         response(200, JSON.generate(envelope))

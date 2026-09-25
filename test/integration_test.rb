@@ -46,6 +46,34 @@ class IntegrationTest < Minitest::Test
     assert_nil @store.claim_delivery
   end
 
+  def test_newly_relevant_record_is_not_suppressed_by_unchanged_fingerprint
+    @store.apply_items(profile, "https://example.org/a", [item.merge("relevance" => "uncertain")], silent: false)
+    assert_nil @store.claim_delivery
+    @store.apply_items(profile, "https://example.org/a", [item], silent: false)
+    job = @store.claim_delivery
+    assert_equal "new", job.dig("payload", "kind")
+    @store.apply_items(profile, "https://example.org/a", [item], silent: false)
+    assert_equal 1, @store.query("SELECT count(*)::integer AS n FROM radar_outbox").first["n"]
+  end
+
+  def test_reanalysis_notifications_are_opt_in_even_on_unchanged_page
+    [false, true].each do |notify|
+      p = profile.merge("id" => "reanalysis_#{notify}", "notify_on_reanalysis" => notify)
+      url = p["seed_urls"].first
+      key = Radar.digest([p["id"], url])
+      content = { "text" => "Existing event content", "links" => [], "source_tags" => [] }
+      @store.save_document(key, p["id"], url, content, Radar.digest(content["text"]), "old-policy", {})
+      http = FakeHTTP.new { |_, request_url, _| response(request_url.end_with?("robots.txt") ? 404 : 304, "") }
+      runner = Radar::Runner.new(config, @store, http: http)
+      @store.query("INSERT INTO radar_hosts(host) VALUES($1) ON CONFLICT DO NOTHING", [URI(url).host])
+      @store.robots(URI(url).host, "")
+      @store.query("UPDATE radar_hosts SET next_at=now()-interval '1 second'")
+      runner.crawl(p, { "url" => url, "depth" => p["max_depth"], "initial" => false })
+      payload = @store.query("SELECT payload FROM radar_jobs WHERE profile_id=$1 AND kind='analyze'", [p["id"]]).first.fetch("payload")
+      assert_equal !notify, payload["silent"]
+    end
+  end
+
   def test_expired_delivery_is_held_and_transient_is_retried
     @store.apply_items(profile, "https://example.org/a", [item], silent: false)
     job = @store.claim_delivery

@@ -148,9 +148,10 @@ module Radar
             ON CONFLICT(key) DO UPDATE SET content=$4,fingerprint=$5,decision=$6,updated_at=now()
           SQL
           changed = prior && prior["fingerprint"] != fingerprint
-          next if silent || decision != "matched" || (prior && !changed)
+          newly_matched = prior && prior["decision"] != "matched"
+          next if silent || decision != "matched" || (prior && !changed && !newly_matched)
           event = SecureRandom.uuid
-          kind = prior ? "updated" : "new"
+          kind = prior && !newly_matched ? "updated" : "new"
           payload = { "kind" => kind, "item" => item, "url" => url, "checked_at" => Time.now.utc.iso8601, "evidence_status" => "source_quote_verified" }
           query("INSERT INTO radar_events(id,item_key,kind,payload) VALUES($1,$2,$3,$4)", [event, key, kind, JSON.generate(payload)])
           query("INSERT INTO radar_outbox(id,event_id,target_ref,payload) VALUES($1,$2,$3,$4)", [SecureRandom.uuid, event, profile["target_ref"], JSON.generate(payload)])

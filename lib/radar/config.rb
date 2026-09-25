@@ -38,6 +38,9 @@ module Radar
         p["allowed_domains"].each { |d| raise "Geçersiz domain: #{d}" unless d.match?(/\A[a-z0-9.-]+\z/) && d.include?(".") }
         p["seed_urls"].each { |u| raise "Seed izinli domain içinde olmalı" unless URL.allowed?(u, p["allowed_domains"]) }
         %w[enabled notify_initial exclude_past_events].each { |k| raise "#{k} boolean olmalı" unless [true, false].include?(p[k]) }
+        if p.key?("notify_on_reanalysis") && ![true, false].include?(p["notify_on_reanalysis"])
+          raise "notify_on_reanalysis boolean olmalı"
+        end
       end
     end
 

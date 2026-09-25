@@ -142,7 +142,8 @@ module Radar
         response_headers = response.headers
       end
       hash = Radar.digest(content["text"])
-      silent = (payload["initial"] && !profile["notify_initial"]) || (prior && prior["signature"] != signature)
+      silent = (payload["initial"] && !profile["notify_initial"]) ||
+               (prior && prior["signature"] != signature && !profile.fetch("notify_on_reanalysis", false))
       @store.transaction do
         @store.save_document(key, profile["id"], url, content, hash, signature, response_headers)
         if !content["text"].empty? && (!prior || prior["hash"] != hash || prior["signature"] != signature)

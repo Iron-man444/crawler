@@ -14,12 +14,19 @@ module Radar
         @store.schedule(profile) do |initial|
           payload = { "cycle" => SecureRandom.uuid, "depth" => 0, "initial" => initial }
           profile["seed_urls"].each { |url| @store.enqueue_crawl(profile, URL.canonical(url), payload) }
-          profile["search_queries"].each do |q|
-            @store.enqueue("search", profile["id"], payload.merge("query" => q), key: Radar.digest(["search", profile["id"], q]), refresh: true)
-          end
           # Keep room for new links instead of filling every cycle with old detail pages.
-          @store.known_urls(profile).first(profile["max_pages"] / 2).each do |url|
+          revisit_limit = profile["max_pages"] / (profile["seed_urls"].empty? ? 2 : 4)
+          @store.known_urls(profile).first(revisit_limit).each do |url|
             @store.enqueue_crawl(profile, url, payload.merge("depth" => profile["max_depth"]))
+          end
+        end
+        unless profile["search_queries"].empty?
+          @store.schedule(profile, key: "search:#{profile['id']}", interval: profile.fetch("search_interval_seconds", 86400)) do |initial|
+            profile["search_queries"].each do |q|
+              # Each query has its own bounded crawl budget; slow queries cannot fill another's slots.
+              payload = { "cycle" => SecureRandom.uuid, "depth" => 0, "initial" => initial, "query" => q }
+              @store.enqueue("search", profile["id"], payload, key: Radar.digest(["search", profile["id"], q]), refresh: true)
+            end
           end
         end
       end
@@ -51,7 +58,7 @@ module Radar
             @store.block_host(provider_host, e.code) if %w[http_401 http_402 http_403].include?(e.code)
           end
           @store.fail_job(job, e)
-          @log.warn("job=#{job['id']} kind=#{job['kind']} status=#{e.code}")
+          @log.warn("job=#{job['id']} kind=#{job['kind']} status=#{e.code}") unless %w[host_wait daily_budget].include?(e.code)
         end
       end
     end
@@ -71,7 +78,7 @@ module Radar
         rescue WorkError, KeyError
           next
         end
-        allowed = URL.allowed?(url, profile["allowed_domains"])
+        allowed = URL.allowed?(url, profile["allowed_domains"]) || profile.fetch("discover_new_domains", false)
         @store.discover(profile["id"], result.merge("link" => url), payload["query"], allowed)
         @store.enqueue_crawl(profile, url, payload.merge("depth" => 0)) if allowed
       end
@@ -91,8 +98,17 @@ module Radar
       if row && row["robots_until"] && row["robots_until"] > Time.now
         body = row["robots"]
       else
-        response = page_request("#{uri.scheme}://#{uri.host}/robots.txt", profile)
-        raise WorkError.new("robots_redirect_requires_review", permanent: true) if (300..399).cover?(response.status)
+        robots_url = row && row["robots_fetch_url"] || "#{uri.scheme}://#{uri.host}/robots.txt"
+        response = page_request(robots_url, profile)
+        if [301, 302, 303, 307, 308].include?(response.status)
+          target = URL.canonical(response.headers.fetch("location", ""), robots_url)
+          hops = row && row["robots_redirects"] || 0
+          raise WorkError.new("robots_redirect_requires_review", permanent: true) unless URL.allowed?(target, profile["allowed_domains"])
+          raise WorkError.new("https_downgrade", permanent: true) if URI(robots_url).scheme == "https" && URI(target).scheme != "https"
+          raise WorkError.new("robots_redirect_limit", permanent: true) if hops >= 5
+          @store.robots_redirect(uri.host, target, hops + 1)
+          raise WorkError.new("host_wait", delay: @config["host_delay_seconds"])
+        end
         if response.status == 404
           body = ""
         else
@@ -115,22 +131,36 @@ module Radar
 
     def crawl(profile, payload)
       url = payload.fetch("url")
-      raise WorkError.new("domain_not_allowed", permanent: true) unless URL.allowed?(url, profile["allowed_domains"])
-      check_robots(url, profile)
+      access_profile = profile
+      if !URL.allowed?(url, profile["allowed_domains"]) && profile.fetch("discover_new_domains", false)
+        # Only URLs actually returned by discovery may open a new domain. HTTP still validates/pins public IPs.
+        origin = payload.fetch("discovery_origin", url)
+        if @store.discovery_allowed?(profile["id"], origin)
+          access_profile = profile.merge("allowed_domains" => [URI(origin).host.sub(/\Awww\./, "")])
+          payload = payload.merge("discovery_origin" => origin)
+        end
+      end
+      raise WorkError.new("domain_not_allowed", permanent: true) unless URL.allowed?(url, access_profile["allowed_domains"])
+      check_robots(url, access_profile)
       key = Radar.digest([profile["id"], url])
       prior = @store.document(key)
       signature = @analyzer.signature(profile)
       headers = {}
-      headers["If-None-Match"] = prior["etag"] if prior && prior["etag"]
-      headers["If-Modified-Since"] = prior["modified"] if prior && prior["modified"]
-      response = page_request(url, profile, headers)
+      if prior && prior["content"]["extractor_version"] == Extractor::VERSION
+        headers["If-None-Match"] = prior["etag"] if prior["etag"]
+        headers["If-Modified-Since"] = prior["modified"] if prior["modified"]
+      end
+      response = page_request(url, access_profile, headers)
       if [301, 302, 303, 307, 308].include?(response.status)
         target = URL.canonical(response.headers.fetch("location", ""), url)
         redirects = payload.fetch("redirects", 0)
         raise WorkError.new("redirect_limit", permanent: true) if redirects >= 5
-        raise WorkError.new("domain_not_allowed", permanent: true) unless URL.allowed?(target, profile["allowed_domains"])
+        raise WorkError.new("domain_not_allowed", permanent: true) unless URL.allowed?(target, access_profile["allowed_domains"])
         raise WorkError.new("https_downgrade", permanent: true) if URI(url).scheme == "https" && URI(target).scheme != "https"
-        @store.enqueue_crawl(profile, target, payload.merge("redirects" => redirects + 1))
+        if profile.fetch("discover_new_domains", false)
+          @store.discover(profile["id"], { "link" => target }, "redirect:#{url}", true)
+        end
+        @store.enqueue_crawl(profile, target, payload.merge("redirects" => redirects + 1), redirect_from: url)
         return
       end
       if response.status == 304 && prior
@@ -150,9 +180,12 @@ module Radar
           @store.enqueue("analyze", profile["id"], { "document_key" => key, "hash" => hash, "signature" => signature, "silent" => !!silent }, key: Radar.digest(["analyze", key, hash, signature]), refresh: true)
         end
         if payload["depth"] < profile["max_depth"]
-          content["links"].each do |link|
-            next unless URL.allowed?(link, profile["allowed_domains"])
-            @store.enqueue_crawl(profile, link, payload.merge("depth" => payload["depth"] + 1))
+          links = content["links"].select { |link| URL.allowed?(link, access_profile["allowed_domains"]) }
+          # Leave room for detail links from list pages at the next depth.
+          limit = [profile["max_pages"] / (profile["max_depth"] - payload["depth"] + 1), 1].max
+          @store.prioritize_unread(profile, links).first(limit).each do |link|
+            @store.discover(profile["id"], { "link" => link }, "link:#{url}", true) if profile.fetch("discover_new_domains", false)
+            @store.enqueue_crawl(profile, link, payload.merge("depth" => payload["depth"] + 1, "redirects" => 0))
           end
         end
       end
@@ -167,7 +200,10 @@ module Radar
       # Configuration edits invalidate queued work; a new crawl will enqueue the current signature.
       return unless @analyzer.signature(profile) == payload["signature"]
       items = @analyzer.analyze(doc["content"]["text"], profile, source_tags: doc["content"]["source_tags"])
-      @store.apply_items(profile, doc["url"], items, silent: payload["silent"])
+      @store.transaction do
+        @store.apply_items(profile, doc["url"], items, silent: payload["silent"])
+        @store.mark_analyzed(payload["document_key"], items.size)
+      end
     end
   end
 end

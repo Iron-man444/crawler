@@ -4,7 +4,9 @@ module Radar
   class BotClient
     def initialize(base, token)
       @base = URI(base)
-      raise "RADAR_URL loopback HTTP olmalı" unless @base.scheme == "http" && %w[127.0.0.1 localhost ::1].include?(@base.hostname)
+      allowed_hosts = %w[127.0.0.1 localhost ::1]
+      allowed_hosts << "radar" if ENV["RADAR_CONTAINER_NETWORK"] == "1"
+      raise "RADAR_URL yerel servis HTTP adresi olmalı" unless @base.scheme == "http" && allowed_hosts.include?(@base.hostname) && !@base.userinfo
       @token = token
     end
     def call(path, payload = {})

@@ -3,6 +3,8 @@ module Radar
     attr_reader :data
     def initialize(path)
       @data = JSON.parse(File.read(path, encoding: "UTF-8"))
+      # Docker bridge mode is explicit; no host port is published by compose.
+      @data["listen"] = "0.0.0.0" if ENV["RADAR_CONTAINER_NETWORK"] == "1"
       validate!
     end
 
@@ -11,7 +13,7 @@ module Radar
     def profile(id) = profiles.find { |p| p["id"] == id }
 
     def validate!
-      raise "listen yalnızca loopback olabilir" unless %w[127.0.0.1 ::1].include?(self["listen"])
+      raise "listen yalnızca loopback olabilir" unless %w[127.0.0.1 ::1].include?(self["listen"]) || (self["listen"] == "0.0.0.0" && ENV["RADAR_CONTAINER_NETWORK"] == "1")
       integer!(self["port"], 1024..65535, "port")
       integer!(self["host_delay_seconds"], 1..3600, "host_delay_seconds")
       integer!(self["max_jobs_per_tick"], 1..1000, "max_jobs_per_tick")
@@ -35,6 +37,10 @@ module Radar
         integer!(p["interval_seconds"], 60..604800, "interval_seconds")
         integer!(p["max_pages"], 1..500, "max_pages")
         integer!(p["max_depth"], 0..5, "max_depth")
+        integer!(p["search_interval_seconds"], 3600..604800, "search_interval_seconds") if p.key?("search_interval_seconds")
+        if p.key?("discover_new_domains") && ![true, false].include?(p["discover_new_domains"])
+          raise "discover_new_domains boolean olmalı"
+        end
         p["allowed_domains"].each { |d| raise "Geçersiz domain: #{d}" unless d.match?(/\A[a-z0-9.-]+\z/) && d.include?(".") }
         p["seed_urls"].each { |u| raise "Seed izinli domain içinde olmalı" unless URL.allowed?(u, p["allowed_domains"]) }
         %w[enabled notify_initial exclude_past_events].each { |k| raise "#{k} boolean olmalı" unless [true, false].include?(p[k]) }

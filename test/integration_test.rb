@@ -136,6 +136,7 @@ class IntegrationTest < Minitest::Test
     runner = Radar::Runner.new(c, @store, http: http, logger: Logger.new(StringIO.new))
     run_ready(runner)
     assert_equal 1, @store.query("SELECT count(*)::integer AS n FROM radar_items").first["n"]
+    assert_equal 1, @store.sources([p]).first["pages_analyzed"]
     assert_nil @store.claim_delivery
     @store.query("UPDATE radar_schedules SET next_at=now()-interval '1 second'")
     run_ready(runner)
@@ -218,7 +219,105 @@ class IntegrationTest < Minitest::Test
     assert_equal 1, @store.query("SELECT count(*)::integer AS n FROM radar_outbox").first["n"]
   end
 
+  def test_redirect_reuses_page_slot_and_link_rotation_prefers_unread
+    p = profile.merge("max_pages" => 1)
+    payload = { "cycle" => "one", "depth" => 0 }
+    @store.enqueue_crawl(p, "https://example.org/start", payload)
+    @store.enqueue_crawl(p, "https://example.org/fair", payload, redirect_from: "https://example.org/start")
+    assert_equal ["https://example.org/fair"], @store.query("SELECT url FROM radar_crawl_visits").map { |r| r["url"] }
+    assert_equal 2, @store.query("SELECT count(*)::integer AS n FROM radar_jobs").first["n"]
+    @store.save_document("existing", p["id"], "https://example.org/old", {}, "hash", "sig", {})
+    assert_equal ["https://example.org/new", "https://example.org/old"], @store.prioritize_unread(p, ["https://example.org/old", "https://example.org/new"])
+  end
+
+  def test_search_has_daily_schedule_independent_of_crawl
+    c = config
+    p = profile.merge("search_queries" => ["test"], "search_interval_seconds" => 86400)
+    c.data["profiles"] = [p]
+    c.data["max_jobs_per_tick"] = 0 # Inspect scheduling without processing network work.
+    runner = Radar::Runner.new(c, @store, http: FakeHTTP.new { flunk "No network" })
+    runner.tick
+    @store.query("UPDATE radar_jobs SET state='done'")
+    @store.query("UPDATE radar_schedules SET next_at=now()-interval '1 second' WHERE profile_id=$1", [p["id"]])
+    runner.tick
+    assert_equal "done", @store.query("SELECT state FROM radar_jobs WHERE kind='search'").first["state"]
+    assert_equal "pending", @store.query("SELECT state FROM radar_jobs WHERE kind='crawl'").first["state"]
+  end
+
+  def test_discovery_opens_only_returned_domains_and_report_includes_empty_sources
+    ENV["SERPAPI_API_KEY"] = "fake"
+    p = profile.merge("discover_new_domains" => true, "max_depth" => 0)
+    http = FakeHTTP.new do |_, url, _|
+      if url.include?("serpapi.com")
+        response(200, JSON.generate("organic_results" => [{ "link" => "https://new-source.test/events" }]))
+      else
+        response(200, "<main>Trade fair announcement content</main>", { "content-type" => "text/html" }, url)
+      end
+    end
+    runner = Radar::Runner.new(config, @store, http: http)
+    runner.search(p, { "query" => "test", "cycle" => "discovery", "initial" => false })
+    @store.query("INSERT INTO radar_hosts(host) VALUES('new-source.test')")
+    @store.robots("new-source.test", "")
+    runner.crawl(p, { "url" => "https://new-source.test/events", "depth" => 0 })
+    assert_equal "domain_not_allowed", assert_raises(Radar::WorkError) {
+      runner.crawl(p, { "url" => "https://unseen.test/", "depth" => 0 })
+    }.code
+    @store.apply_items(p, "https://new-source.test/events", [item], silent: false)
+    report = @store.sources([p, p.merge("id" => "empty")])
+    assert_equal 1, report.first["pages"]
+    assert_equal 1, report.first.dig("items", "matched")
+    assert_equal 1, report.first.dig("notifications", "pending")
+    assert_equal 0, report.last["pages"]
+    assert_empty report.last["jobs"]
+  ensure
+    ENV.delete("SERPAPI_API_KEY")
+  end
+
+  def test_robots_redirect_is_resumed_then_disallow_is_enforced
+    http = FakeHTTP.new do |_, url, _|
+      if url.end_with?("robots.txt")
+        response(301, "", { "location" => "/robots-policy" }, url)
+      else
+        response(200, "User-agent: *\nDisallow: /private", {}, url)
+      end
+    end
+    runner = Radar::Runner.new(config, @store, http: http)
+    assert_equal "host_wait", assert_raises(Radar::WorkError) { runner.check_robots("https://example.org/private", profile) }.code
+    @store.query("UPDATE radar_hosts SET next_at=now()-interval '1 second'")
+    assert_equal "robots_disallowed", assert_raises(Radar::WorkError) { runner.check_robots("https://example.org/private", profile) }.code
+    assert_equal 2, http.calls.size
+    assert_nil @store.host("example.org")["robots_fetch_url"]
+  end
+
+  def test_retry_crawls_does_not_retry_blocked_or_inactive_sources
+    ["network_error", "robots_disallowed", "http_403"].each do |code|
+      @store.enqueue("crawl", profile["id"], {}, key: code)
+      @store.query("UPDATE radar_jobs SET state='review',error=$1 WHERE key=$1", [code])
+    end
+    @store.enqueue("crawl", "inactive", {}, key: "inactive")
+    @store.query("UPDATE radar_jobs SET state='review',error='network_error' WHERE key='inactive'")
+    assert_equal 1, @store.retry_crawls([profile])
+    assert_equal ["network_error"], @store.query("SELECT key FROM radar_jobs WHERE state='pending'").map { |r| r["key"] }
+  end
+
+  def test_analysis_report_invalidates_changed_document_only
+    @store.save_document("doc", profile["id"], "https://example.org/", { "text" => "text" }, "hash", "sig", {})
+    @store.mark_analyzed("doc", 0)
+    @store.save_document("doc", profile["id"], "https://example.org/", { "text" => "text" }, "hash", "sig", {})
+    assert_equal 1, @store.sources([profile]).first["pages_analyzed"]
+    @store.save_document("doc", profile["id"], "https://example.org/", { "text" => "changed" }, "new-hash", "sig", {})
+    assert_equal 0, @store.sources([profile]).first["pages_analyzed"]
+  end
+
+  def test_cross_domain_robots_redirect_still_requires_review
+    http = FakeHTTP.new { response(302, "", { "location" => "https://other.test/robots.txt" }) }
+    runner = Radar::Runner.new(config, @store, http: http)
+    assert_equal "robots_redirect_requires_review", assert_raises(Radar::WorkError) { runner.check_robots("https://example.org/events", profile) }.code
+    assert_equal 1, http.calls.size
+  end
+
   private
+
 
   def run_ready(runner)
     4.times do

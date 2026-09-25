@@ -89,7 +89,7 @@ bash scripts/vps.sh start --provider mistral --model mistral-small-2603 --source
 bash scripts/vps.sh status
 ```
 
---sources 50 varsayılan olarak 1800 saniye, kaynak başına üç sayfa ve derinlik bir ayarlar. İlk sonuç bildirimi açıktır; ilk gün çok sayıda mesaj gelebilir. Mistral için .env içindeki MISTRAL_API_KEY kullanılır. Gemini anahtarı silinmez, SerpAPI/sosyal medya kapalıdır. Önceki settings.json yedeklenir. Paket erp50_ ile başlayan ayrı profil kimlikleri kullanır; ilk analiz hemen zamanlanır, eski pilotun altı saatlik programını beklemez. Eski profillerin kalan işleri profile_disabled olarak review'a düşebilir; tekrar açmayın. Önceden bildirilmiş etkinlik yeni profilde tekrar gelebilir.
+--sources 50 artık varsayılan olarak 1800 saniye, kaynak başına 12 sayfa ve derinlik iki ayarlar. Yukarıdaki 1/3 sayfalık kapasite tablosu eski örnek senaryolardır; güncel kurulum ve Google keşfi için TARAMA_VE_GOOGLE.md belgesine bakın. İlk sonuç bildirimi açıktır; ilk gün çok sayıda mesaj gelebilir. Mistral için .env içindeki MISTRAL_API_KEY kullanılır. Gemini anahtarı silinmez. Google keşfi --google ile açılır; sosyal medya entegrasyonu kapalıdır. Önceki settings.json yedeklenir. Paket erp50_ ile başlayan ayrı profil kimlikleri kullanır; ilk analiz hemen zamanlanır, eski pilotun altı saatlik programını beklemez. Eski profillerin kalan işleri profile_disabled olarak review'a düşebilir; tekrar açmayın. Önceden bildirilmiş etkinlik yeni profilde tekrar gelebilir.
 
 Günlük analiz çağrısı sınırını örneğin 200 yapmak ayrı bir tercihtir:
 
@@ -104,7 +104,7 @@ Bu komutu yalnız bu analiz hacmini istediğinizde kullanın; bütçenin dahil k
 - status artık ilk 20 bekleyen işin attempts/error/available_at bilgisini verir; host_wait ile http_429/503 ve daily_budget ayrılabilir.
 - JSON-LD ve genel HTML kullanılır; siteye özel selector eklenmedi.
 - PDF/JS tarayıcı desteği ve farklı URL'lerdeki aynı etkinliği birleştirme yoktur.
-- Kaynak başına üç sayfa tüm siteyi kapsamaz. Genel bağlantı sırası önemli detayları kaçırabilir; kaynak kalitesi canlı sonuçlarla ölçülmelidir.
+- Kaynak başına 12 sayfa da tüm siteyi kapsamaz. Bağlantılar etkinlik ilgisine göre sıralansa da detaylar kaçabilir; kaynak kalitesi canlı sonuçlarla ölçülmelidir.
 - İlk 24 saatte erişilebilen kaynak sayısı, review hataları, bekleyen en eski iş, günlük çağrılar ve ilgili bildirimler değerlendirilmeden 100 kaynağın yarım saatte yetişeceği söylenemez.
 - Yerel testlerde kurulum/sağlayıcı/model/50 kaynak/zamanlama ve çıktı limiti kontrol edildi. Bu turda canlı Mistral isteği veya VPS yük testi yapılmadı.
 

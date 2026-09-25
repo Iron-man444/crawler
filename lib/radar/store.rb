@@ -36,13 +36,13 @@ module Radar
       raise "Başka radar worker'ı çalışıyor" unless query("SELECT pg_try_advisory_lock(824735019) AS locked").first["locked"]
     end
 
-    def schedule(profile)
+    def schedule(profile, key: profile["id"], interval: profile["interval_seconds"])
       transaction do
-        query("INSERT INTO radar_schedules(profile_id,next_at) VALUES($1,now()) ON CONFLICT DO NOTHING", [profile["id"]])
-        row = query("SELECT * FROM radar_schedules WHERE profile_id=$1 FOR UPDATE", [profile["id"]]).first
+        query("INSERT INTO radar_schedules(profile_id,next_at) VALUES($1,now()) ON CONFLICT DO NOTHING", [key])
+        row = query("SELECT * FROM radar_schedules WHERE profile_id=$1 FOR UPDATE", [key]).first
         next nil if row["next_at"] > Time.now
         yield !row["started"]
-        query("UPDATE radar_schedules SET started=true,next_at=now()+$2*interval '1 second' WHERE profile_id=$1", [profile["id"], profile["interval_seconds"]])
+        query("UPDATE radar_schedules SET started=true,next_at=now()+$2*interval '1 second' WHERE profile_id=$1", [key, interval])
       end
     end
 
@@ -84,8 +84,10 @@ module Radar
     def known_urls(profile)
       query("SELECT url FROM radar_documents WHERE profile_id=$1 ORDER BY checked_at LIMIT $2", [profile["id"], profile["max_pages"]]).map { |r| r["url"] }
     end
-    def enqueue_crawl(profile, url, payload)
+    def enqueue_crawl(profile, url, payload, redirect_from: nil)
       transaction do
+        # A redirect replaces the original visit instead of consuming another page slot.
+        query("DELETE FROM radar_crawl_visits WHERE profile_id=$1 AND cycle=$2 AND url=$3", [profile["id"], payload["cycle"], redirect_from]) if redirect_from
         count = query("SELECT count(*)::integer AS n FROM radar_crawl_visits WHERE profile_id=$1 AND cycle=$2", [profile["id"], payload["cycle"]]).first["n"]
         next if count >= profile["max_pages"]
         rows = query("INSERT INTO radar_crawl_visits(profile_id,cycle,url) VALUES($1,$2,$3) ON CONFLICT DO NOTHING RETURNING url", [profile["id"], payload["cycle"], url])
@@ -93,11 +95,26 @@ module Radar
         enqueue("crawl", profile["id"], payload.merge("url" => url), key: Radar.digest(["crawl", profile["id"], url]), refresh: true)
       end
     end
+
+    def discovery_allowed?(profile_id, url)
+      !query("SELECT 1 FROM radar_discovery WHERE profile_id=$1 AND url=$2 AND state='approved' LIMIT 1", [profile_id, url]).empty?
+    end
+
+    def prioritize_unread(profile, links)
+      checked = query("SELECT url,checked_at FROM radar_documents WHERE profile_id=$1", [profile["id"]]).to_h { |r| [r["url"], r["checked_at"]] }
+      links.each_with_index.sort_by { |url, index| [checked.key?(url) ? 1 : 0, checked[url] || Time.at(0), index] }.map(&:first)
+    end
     def save_document(key, profile_id, url, content, hash, signature, headers)
       query(<<~SQL, [key, profile_id, url, hash, signature, headers["etag"], headers["last-modified"], JSON.generate(content)])
         INSERT INTO radar_documents(key,profile_id,url,hash,signature,etag,modified,content) VALUES($1,$2,$3,$4,$5,$6,$7,$8)
-        ON CONFLICT(key) DO UPDATE SET hash=$4,signature=$5,etag=$6,modified=$7,content=$8,checked_at=now()
+        ON CONFLICT(key) DO UPDATE SET hash=$4,signature=$5,etag=$6,modified=$7,content=$8,checked_at=now(),
+          analyzed_at=CASE WHEN radar_documents.hash=$4 AND radar_documents.signature=$5 THEN radar_documents.analyzed_at END,
+          analyzed_items=CASE WHEN radar_documents.hash=$4 AND radar_documents.signature=$5 THEN radar_documents.analyzed_items END
       SQL
+    end
+
+    def mark_analyzed(key, count)
+      query("UPDATE radar_documents SET analyzed_at=now(),analyzed_items=$2 WHERE key=$1", [key, count])
     end
 
     def reserve_host(host, delay)
@@ -112,7 +129,10 @@ module Radar
 
     def host(host) = query("SELECT * FROM radar_hosts WHERE host=$1", [host]).first
     def robots(host, body)
-      query("UPDATE radar_hosts SET robots=$2,robots_until=now()+interval '12 hours' WHERE host=$1", [host, body])
+      query("UPDATE radar_hosts SET robots=$2,robots_until=now()+interval '12 hours',robots_fetch_url=NULL,robots_redirects=0 WHERE host=$1", [host, body])
+    end
+    def robots_redirect(host, url, hops)
+      query("UPDATE radar_hosts SET robots_fetch_url=$2,robots_redirects=$3 WHERE host=$1", [host, url, hops])
     end
     def block_host(host, reason)
       query("UPDATE radar_hosts SET blocked=true,reason=$2 WHERE host=$1", [host, reason])
@@ -205,6 +225,28 @@ module Radar
         "items" => query("SELECT decision,count(*)::integer AS count FROM radar_items GROUP BY decision"),
         "usage_today" => query("SELECT provider,calls FROM radar_usage WHERE day=CURRENT_DATE") }
     end
+
+    def sources(profiles)
+      documents = query("SELECT profile_id,count(*)::integer AS pages,count(analyzed_at)::integer AS pages_analyzed,max(analyzed_at) AS last_analysis,max(checked_at) AS last_fetch,max(length(content->>'text'))::integer AS largest_text_chars FROM radar_documents GROUP BY profile_id").to_h { |r| [r["profile_id"], r] }
+      jobs = query("SELECT profile_id,kind,state,error,count(*)::integer AS count FROM radar_jobs GROUP BY profile_id,kind,state,error").group_by { |r| r["profile_id"] }
+      items = query("SELECT profile_id,decision,count(*)::integer AS count FROM radar_items GROUP BY profile_id,decision").group_by { |r| r["profile_id"] }
+      deliveries = query(<<~SQL).group_by { |r| r["profile_id"] }
+        SELECT i.profile_id,o.state,count(*)::integer AS count FROM radar_outbox o
+        JOIN radar_events e ON e.id=o.event_id JOIN radar_items i ON i.key=e.item_key
+        GROUP BY i.profile_id,o.state
+      SQL
+      profiles.map do |p|
+        { "id" => p["id"], "sources" => p["seed_urls"], "google_queries" => p["search_queries"].size,
+          "pages" => documents.dig(p["id"], "pages") || 0,
+          "pages_analyzed" => documents.dig(p["id"], "pages_analyzed") || 0,
+          "last_analysis" => documents.dig(p["id"], "last_analysis"),
+          "last_fetch" => documents.dig(p["id"], "last_fetch"),
+          "largest_text_chars" => documents.dig(p["id"], "largest_text_chars") || 0,
+          "jobs" => (jobs[p["id"]] || []).map { |r| r.reject { |k, _| k == "profile_id" } },
+          "items" => (items[p["id"]] || []).to_h { |r| [r["decision"], r["count"]] },
+          "notifications" => (deliveries[p["id"]] || []).to_h { |r| [r["state"], r["count"]] } }
+      end
+    end
     def review
       { "jobs" => query("SELECT id,kind,profile_id,error FROM radar_jobs WHERE state='review' ORDER BY id LIMIT 100"),
         "domains" => query("SELECT profile_id,url,title FROM radar_discovery WHERE state='review_new_domain' LIMIT 100"),
@@ -215,8 +257,13 @@ module Radar
     def retry_job(id)
       query("UPDATE radar_jobs SET state='pending',attempts=0,available_at=now() WHERE id=$1 AND state='review'", [id])
     end
+    def retry_crawls(profiles)
+      profiles.sum do |profile|
+        query("UPDATE radar_jobs SET state='pending',attempts=0,error=NULL,available_at=now() WHERE profile_id=$1 AND kind='crawl' AND state='review' AND error IN ('network_error','http_500','http_502','http_503','http_504','robots_redirect_requires_review') RETURNING id", [profile["id"]]).size
+      end
+    end
     def unblock_host(host)
-      query("UPDATE radar_hosts SET blocked=false,reason=NULL,next_at=now(),robots_until=NULL WHERE host=$1", [host])
+      query("UPDATE radar_hosts SET blocked=false,reason=NULL,next_at=now(),robots_until=NULL,robots_fetch_url=NULL,robots_redirects=0 WHERE host=$1", [host])
     end
     def resolve_delivery(id, action)
       raise "İşlem sent veya retry olmalı" unless %w[sent retry].include?(action)

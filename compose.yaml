@@ -19,6 +19,7 @@ services:
     build: .
     command: ["sh", "-c", "ruby bin/radar migrate && exec ruby bin/radar run"]
     environment:
+      RADAR_CONTAINER_NETWORK: "1"
       DATABASE_URL: postgresql://radar:${POSTGRES_PASSWORD}@db:5432/radar
       RADAR_API_TOKEN: ${RADAR_API_TOKEN:?Set RADAR_API_TOKEN in .env}
       GEMINI_API_KEY: ${GEMINI_API_KEY:-}
@@ -39,9 +40,9 @@ services:
   telegram:
     build: .
     command: ["ruby", "bin/telegram"]
-    network_mode: service:radar
     environment:
-      RADAR_URL: http://127.0.0.1:8787
+      RADAR_CONTAINER_NETWORK: "1"
+      RADAR_URL: http://radar:8787
       RADAR_API_TOKEN: ${RADAR_API_TOKEN}
       TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:?Set TELEGRAM_BOT_TOKEN in .env}
       TELEGRAM_TARGETS: ${TELEGRAM_TARGETS:?Set TELEGRAM_TARGETS in .env}

@@ -19,6 +19,8 @@ CREATE TABLE IF NOT EXISTS radar_items (
   content jsonb NOT NULL, fingerprint text NOT NULL, decision text NOT NULL,
   updated_at timestamptz NOT NULL DEFAULT now()
 );
+ALTER TABLE radar_documents ADD COLUMN IF NOT EXISTS analyzed_at timestamptz;
+ALTER TABLE radar_documents ADD COLUMN IF NOT EXISTS analyzed_items integer;
 CREATE TABLE IF NOT EXISTS radar_events (
   id text PRIMARY KEY, item_key text NOT NULL REFERENCES radar_items(key),
   kind text NOT NULL, payload jsonb NOT NULL, created_at timestamptz NOT NULL DEFAULT now()
@@ -43,6 +45,8 @@ CREATE TABLE IF NOT EXISTS radar_discovery (
   profile_id text NOT NULL, url text NOT NULL, query text NOT NULL, title text, snippet text,
   state text NOT NULL, found_at timestamptz NOT NULL DEFAULT now(), PRIMARY KEY(profile_id,url,query)
 );
+ALTER TABLE radar_hosts ADD COLUMN IF NOT EXISTS robots_fetch_url text;
+ALTER TABLE radar_hosts ADD COLUMN IF NOT EXISTS robots_redirects integer NOT NULL DEFAULT 0;
 CREATE TABLE IF NOT EXISTS radar_usage (
   day date NOT NULL, provider text NOT NULL, calls integer NOT NULL, PRIMARY KEY(day,provider)
 );

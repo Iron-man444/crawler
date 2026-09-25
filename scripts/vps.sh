@@ -20,6 +20,7 @@ case "$action" in
     "${docker_cmd[@]}" run --rm --user "$(id -u):$(id -g)" -v "$PWD/config:/app/config" firsat-radari:pilot ruby scripts/setup_pilot.rb "$@"
     "${docker_cmd[@]}" run --rm -v "$PWD/config:/app/config:ro" firsat-radari:pilot ruby bin/radar validate
     "${docker_cmd[@]}" compose build radar telegram
+    "${docker_cmd[@]}" compose run --rm --no-deps radar ruby bin/radar check-env
     "${docker_cmd[@]}" compose stop telegram radar
     "${docker_cmd[@]}" compose up -d --force-recreate
     echo "Servisler başlatıldı. Durum: bash scripts/vps.sh status | Log: bash scripts/vps.sh logs"
@@ -30,6 +31,8 @@ case "$action" in
     "${docker_cmd[@]}" compose exec radar ruby bin/radar review
     ;;
   logs) "${docker_cmd[@]}" compose logs --tail=100 -f radar telegram ;;
+  sources) "${docker_cmd[@]}" compose exec radar ruby bin/radar sources ;;
+  retry-crawls) "${docker_cmd[@]}" compose exec radar ruby bin/radar retry-crawls ;;
   stop) "${docker_cmd[@]}" compose stop telegram radar ;;
-  *) echo "Kullanım: bash scripts/vps.sh {test|start [--provider gemini|mistral] [--model MODEL] [--sources 50] [--all]|status|logs|stop}" >&2; exit 2 ;;
+  *) echo "Kullanım: bash scripts/vps.sh {test|start [--provider gemini|mistral] [--model MODEL] [--sources 50] [--pages N] [--depth N] [--google|--no-google]|status|sources|logs|stop}" >&2; exit 2 ;;
 esac

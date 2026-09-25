@@ -8,10 +8,11 @@ store = nil
 begin
   case command
   when "help", "--help", "-h"
-    puts "radar validate | migrate | once | run | status | review | retry-job ID | unblock-host HOST | resolve-delivery ID sent/retry"
+    puts "radar validate | migrate | once | run | status | sources | review | retry-crawls | retry-job ID | unblock-host HOST | resolve-delivery ID sent/retry"
     puts "Ayar dosyası: RADAR_CONFIG (varsayılan config/settings.json). Sırlar: ortam değişkenleri."
-  when "validate"
+  when "validate", "check-env"
     config = Radar::Config.new(path)
+    config.check_secrets! if command == "check-env"
     puts "Yapılandırma geçerli. Aktif profil: #{config.profiles.size}. Anahtarlar ve bağlantılar test edilmedi."
   else
     store = Radar::Store.new(ENV.fetch("DATABASE_URL"))
@@ -21,6 +22,10 @@ begin
       puts "Veritabanı şeması hazır."
     when "status", "review"
       puts JSON.pretty_generate(command == "status" ? store.status : store.review)
+    when "sources"
+      puts JSON.pretty_generate(store.sources(Radar::Config.new(path).profiles))
+    when "retry-crawls"
+      puts "Yeniden kuyruğa alınan tarama: #{store.retry_crawls(Radar::Config.new(path).profiles)}"
     when "retry-job"
       store.retry_job(Integer(ARGV.fetch(0)))
     when "unblock-host"
@@ -63,7 +68,7 @@ rescue PG::Error
 rescue StandardError => e
   # Provider response bodies and connection strings can contain credentials.
   warn "İşlem başarısız (#{e.class}). Yapılandırma ve servis durumunu kontrol edin."
-  warn e.message if command == "validate"
+  warn e.message if %w[validate check-env].include?(command)
   exit 1
 ensure
   store&.close

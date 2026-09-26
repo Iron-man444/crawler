@@ -36,7 +36,7 @@ module Radar
   end
 
   class Extractor
-    VERSION = 2
+    VERSION = 3
     def self.call(body, url, content_type)
       charset = content_type[/charset\s*=\s*["']?([\w-]+)/i, 1] || body.b[/charset\s*=\s*["']?([\w-]+)/i, 1] || "UTF-8"
       encoding = Encoding.find(charset) rescue Encoding::UTF_8
@@ -78,6 +78,7 @@ module Radar
         score += 4 if text.match?(/takvim|calendar|duyuru|announcement|haber|news/)
         score += 2 if text.match?(/\b20\d{2}\b/)
         score -= 30 if text.match?(/hakkimizda|hakkımızda|about|iletisim|iletişim|contact|gizlilik|privacy|login|giris|giriş|cookie|kvkk/)
+        score -= 30 if text.match?(/belge sat[iı]ş[iı]|belge satisi|online islemler|online işlemler|vekaleten|aidat|mevzuat|sirküler|sirkuler/) && !Filter.event_candidate?(text)
         score -= 20 if path == "/" || path.match?(%r{\A/(?:tr|en)/?\z})
         next if score < 0 || link == url
         [link, score, index]

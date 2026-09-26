@@ -41,6 +41,7 @@ module Radar
         if p.key?("discover_new_domains") && ![true, false].include?(p["discover_new_domains"])
           raise "discover_new_domains boolean olmalı"
         end
+        raise "meeting_only boolean olmalı" if p.key?("meeting_only") && ![true, false].include?(p["meeting_only"])
         p["allowed_domains"].each { |d| raise "Geçersiz domain: #{d}" unless d.match?(/\A[a-z0-9.-]+\z/) && d.include?(".") }
         p["seed_urls"].each { |u| raise "Seed izinli domain içinde olmalı" unless URL.allowed?(u, p["allowed_domains"]) }
         %w[enabled notify_initial exclude_past_events].each { |k| raise "#{k} boolean olmalı" unless [true, false].include?(p[k]) }

@@ -43,8 +43,8 @@ if options[:sources] == 50
     profile = Marshal.load(Marshal.dump(base))
     profile.merge!("id" => "erp50_#{source.fetch('id').downcase}", "enabled" => true,
       "seed_urls" => [source.fetch("url")], "allowed_domains" => [source.fetch("host").sub(/\Awww\./, "")],
-      "interval_seconds" => 1800, "max_pages" => 12, "max_depth" => 2)
-    profile["description"] = base["description"].sub(/ MAKTEK Avrasya\z/, "") + " Kaynak: #{source.fetch('name')}."
+      "interval_seconds" => 7200, "max_pages" => 6, "max_depth" => 2)
+    profile["description"] = base["description"]
     profile
   end
   config["llm"]["min_interval_seconds"] = 60
@@ -66,7 +66,7 @@ if google_enabled
   year = Time.now.year
   queries = [
     %(Türkiye (fuar OR zirve OR kongre) (sanayi OR üretim) #{year}),
-    %(Türkiye ("B2B" OR "iş ortaklığı" OR "tedarikçi günü") #{year}),
+    %(Türkiye ("B2B görüşmeleri" OR "iş buluşması" OR "tedarikçi günü") #{year}),
     %(Türkiye ("yapay zeka" OR yazılım OR "siber güvenlik") (buluşma OR konferans OR zirve) #{year}),
     %(site:org.tr ("etkinlik takvimi" OR "iş forumu" OR "sanayici buluşması") #{year}),
     %(Türkiye (lojistik OR ambalaj OR tekstil OR mobilya) (fuar OR zirve) #{year}),
@@ -78,7 +78,7 @@ if google_enabled
   queries.each_with_index do |query, index|
     p = Marshal.load(Marshal.dump(base))
     p.merge!("id" => "google_#{index + 1}", "enabled" => true, "seed_urls" => [], "allowed_domains" => [],
-      "search_queries" => [query], "search_interval_seconds" => 86400, "interval_seconds" => 1800,
+      "search_queries" => [query], "search_interval_seconds" => 86400, "interval_seconds" => options.fetch(:interval, 7200),
       "discover_new_domains" => true, "max_pages" => 10, "max_depth" => 1)
     p["description"] = base["description"].sub(/ Kaynak:.*\z/, "").sub(/ MAKTEK Avrasya\z/, "")
     config["profiles"] << p
@@ -100,4 +100,4 @@ end
 puts "Pilot hazır: #{config['profiles'].count { |p| p['enabled'] }} aktif kaynak; ilk tarama bildirimi açık."
 puts "Sağlayıcı: #{provider}, model: #{model}. Google: #{google_enabled ? '8 günlük sorgu, SERPAPI_API_KEY gerekli' : 'kapalı'}. Sosyal medya kapalı. .env değiştirilmedi."
 puts "Günlük LLM sınırı: #{config['llm']['max_calls_per_day']} çağrı (parasal harcama limiti değildir)."
-puts "50 kaynak için ilk analiz bütçe/kota nedeniyle birden fazla güne yayılabilir; 30 dakika tamamlanma garantisi değildir." if options[:sources] == 50
+puts "Etkinlik odaklı tarama: 50 kaynak varsayılanı 2 saat / 6 sayfa. Günlük LLM sınırı korunur; ilk analizler bütçeye göre sırada bekleyebilir." if options[:sources] == 50

@@ -199,7 +199,7 @@ module Radar
       return unless doc && doc["hash"] == payload["hash"] && doc["signature"] == payload["signature"]
       # Configuration edits invalidate queued work; a new crawl will enqueue the current signature.
       return unless @analyzer.signature(profile) == payload["signature"]
-      items = @analyzer.analyze(doc["content"]["text"], profile, source_tags: doc["content"]["source_tags"])
+      items = @analyzer.analyze(doc["content"]["text"], profile, source_tags: doc["content"]["source_tags"], source_url: doc["url"])
       @store.transaction do
         @store.apply_items(profile, doc["url"], items, silent: payload["silent"])
         @store.mark_analyzed(payload["document_key"], items.size)

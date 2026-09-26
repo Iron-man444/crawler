@@ -1,6 +1,8 @@
 # Kaynak kapsamı ve Google keşfi
 
-## Bu sürüm
+> Güncel etkinlik filtresi, iki saatlik tarama ve altı sayfalık pilot bütçesi için [ETKINLIK_ODAGI_VE_API_KULLANIMI.md](ETKINLIK_ODAGI_VE_API_KULLANIMI.md) belgesine bakın. Aşağıdaki 12 sayfalık/yarım saatlik ayarlar önceki sürüme aittir.
+
+## Önceki kapsam genişletme sürümü
 
 - 50 kaynak pilotunda varsayılan bütçe kaynak başına döngüde 12 URL, derinlik 2. `--pages` ve `--depth` ile değiştirilebilir. Bu bir üst sınırdır; 12 sayfanın tamamının okunacağı garantisi değildir.
 - Bağlantılar URL ve bağlantı metnine göre etkinlik, fuar, takvim ve duyuru önceliğiyle sıralanır. Genel iletişim/hakkımızda bağlantıları ve desteklenmeyen dosya türleri ayrılır. Siteye özel selector yoktur.

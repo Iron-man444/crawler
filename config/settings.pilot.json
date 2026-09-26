@@ -16,7 +16,7 @@
     {
       "id": "erp_erp05",
       "enabled": true,
-      "description": "Türkiye genelinde tüm sektörlerden potansiyel müşteri, tedarikçi, bayi, yatırımcı veya iş ortağıyla tanışılabilecek mesleki ve ticari etkinlikleri geniş kapsamla bul. Amaç ERP konulu etkinlik aramak değil, şirketlerin ve profesyonellerin bir araya geldiği fırsatları keşfetmek. Kaynakta ticari veya mesleki niteliği açık olan fuarları, kongreleri, zirveleri, B2B görüşmelerini, iş forumlarını, oda/OSB buluşmalarını, tedarikçi ve satınalma günlerini, networking toplantılarını, girişimcilik ve yatırımcı buluşmalarını relevant say. Sanayi, üretim, makine, otomasyon, lojistik, mobilya, tekstil, gıda, tarım, ambalaj, enerji, inşaat, akıllı bina, sağlık, perakende, e-ticaret, ihracat, savunma, yazılım, yapay zeka ve siber güvenlik dahil tüm sektörler kapsamdadır. TEKNOFEST gibi teknoloji festivalleri ve mühendislik/üniversite-sanayi buluşmaları da kapsamdadır. MÜSİAD EXPO, mobilya fuarı, dijital baskı fuarı veya akıllı bina fuarı ERP adını anmasa da ticari/mesleki niteliği kaynakta açıksa relevant olmalıdır. ERP, yazılım, dijital dönüşüm veya belirli bir unvanın metinde geçmesini şart koşma; bunların yokluğu uncertain gerekçesi değildir. Belirli şirketlerin katılacağını, ERP ihtiyacını veya entegrasyon imkanı olduğunu uydurma; gerekçede yalnızca kaynakta görülen sektör ve buluşma niteliğini belirt. Tarih veya konum eksikliği tek başına ilgiyi belirsiz yapmaz; eksik alan null olabilir. Henüz gerçekleşmemiş etkinlik duyurularını, katılım çağrılarını ve somut iş ortaklığı/tedarikçi çağrılarını da çıkar. uncertain yalnızca etkinliğin ticari/mesleki niteliği veya profil ile ilişkisi kaynakta gerçekten anlaşılamıyorsa kullanılmalıdır. Eğitim, kurs, bootcamp, sertifika ve indirimler kapsam dışıdır; yan programında eğitim olan bir fuar veya konferans kapsamda kalır. Salt konser, eğlence, spor, yarışma sonucu ve somut etkinlik ya da iş fırsatı içermeyen genel haberleri ele. MAKTEK Avrasya",
+      "description": "Türkiye genelinde tüm sektörlerde insanlarla tanışıp yüz yüze veya karşılıklı etkileşimle iş ilişkisi kurulabilecek, henüz gerçekleşmemiş somut profesyonel buluşmaları bul. Fuar, konferans, kongre, zirve, networking, B2B görüşmesi, sanayici/girişimci/yatırımcı buluşması, oda/OSB iş toplantısı ve teknoloji festivalleri kapsamda. ERP kelimesinin geçmesi gerekmez. Somut katılım fırsatı ve kaynakta yılıyla birlikte açık etkinlik tarihi bulunmalı. Bir konferansın duyurusu event türündedir; sırf duyuru başlığı taşıması engel değildir. Buna karşılık gümrük müşavirleri için vekaleten belge talebi, menşe/dolaşım belgesi, online belge satışı, mevzuat, sirküler, vergi, aidat, ihale, hibe, idari başvuru, sıradan şirket haberi ve geçmiş ziyaret/buluşma haberleri kapsam dışıdır. Ticari hizmet veya şirketlere yararlı bilgi olması yeterli değildir. Eğitim, bootcamp, sertifika ve indirimler kapsam dışıdır. Tek yönlü yayın yerine insanlarla görüşme imkanı sağlayan profesyonel etkinlikleri seç. Katılımcı, tarih veya networking imkanı uydurma; kaynak belirsizse gönderme. Tüm kayıtlar event türünde olmalı ve alıntı somut buluşmayı göstermeli.",
       "target_ref": "main",
       "interval_seconds": 21600,
       "seed_urls": [
@@ -35,18 +35,21 @@
       "include_tags": [],
       "exclude_tags": [],
       "match_mode": "any",
-      "allowed_types": [],
+      "allowed_types": [
+        "event"
+      ],
       "excluded_types": [
         "education",
         "discount"
       ],
       "locations": [],
-      "exclude_past_events": true
+      "exclude_past_events": true,
+      "meeting_only": true
     },
     {
       "id": "erp_erp07",
       "enabled": true,
-      "description": "Türkiye genelinde tüm sektörlerden potansiyel müşteri, tedarikçi, bayi, yatırımcı veya iş ortağıyla tanışılabilecek mesleki ve ticari etkinlikleri geniş kapsamla bul. Amaç ERP konulu etkinlik aramak değil, şirketlerin ve profesyonellerin bir araya geldiği fırsatları keşfetmek. Kaynakta ticari veya mesleki niteliği açık olan fuarları, kongreleri, zirveleri, B2B görüşmelerini, iş forumlarını, oda/OSB buluşmalarını, tedarikçi ve satınalma günlerini, networking toplantılarını, girişimcilik ve yatırımcı buluşmalarını relevant say. Sanayi, üretim, makine, otomasyon, lojistik, mobilya, tekstil, gıda, tarım, ambalaj, enerji, inşaat, akıllı bina, sağlık, perakende, e-ticaret, ihracat, savunma, yazılım, yapay zeka ve siber güvenlik dahil tüm sektörler kapsamdadır. TEKNOFEST gibi teknoloji festivalleri ve mühendislik/üniversite-sanayi buluşmaları da kapsamdadır. MÜSİAD EXPO, mobilya fuarı, dijital baskı fuarı veya akıllı bina fuarı ERP adını anmasa da ticari/mesleki niteliği kaynakta açıksa relevant olmalıdır. ERP, yazılım, dijital dönüşüm veya belirli bir unvanın metinde geçmesini şart koşma; bunların yokluğu uncertain gerekçesi değildir. Belirli şirketlerin katılacağını, ERP ihtiyacını veya entegrasyon imkanı olduğunu uydurma; gerekçede yalnızca kaynakta görülen sektör ve buluşma niteliğini belirt. Tarih veya konum eksikliği tek başına ilgiyi belirsiz yapmaz; eksik alan null olabilir. Henüz gerçekleşmemiş etkinlik duyurularını, katılım çağrılarını ve somut iş ortaklığı/tedarikçi çağrılarını da çıkar. uncertain yalnızca etkinliğin ticari/mesleki niteliği veya profil ile ilişkisi kaynakta gerçekten anlaşılamıyorsa kullanılmalıdır. Eğitim, kurs, bootcamp, sertifika ve indirimler kapsam dışıdır; yan programında eğitim olan bir fuar veya konferans kapsamda kalır. Salt konser, eğlence, spor, yarışma sonucu ve somut etkinlik ya da iş fırsatı içermeyen genel haberleri ele. TEKNOFEST",
+      "description": "Türkiye genelinde tüm sektörlerde insanlarla tanışıp yüz yüze veya karşılıklı etkileşimle iş ilişkisi kurulabilecek, henüz gerçekleşmemiş somut profesyonel buluşmaları bul. Fuar, konferans, kongre, zirve, networking, B2B görüşmesi, sanayici/girişimci/yatırımcı buluşması, oda/OSB iş toplantısı ve teknoloji festivalleri kapsamda. ERP kelimesinin geçmesi gerekmez. Somut katılım fırsatı ve kaynakta yılıyla birlikte açık etkinlik tarihi bulunmalı. Bir konferansın duyurusu event türündedir; sırf duyuru başlığı taşıması engel değildir. Buna karşılık gümrük müşavirleri için vekaleten belge talebi, menşe/dolaşım belgesi, online belge satışı, mevzuat, sirküler, vergi, aidat, ihale, hibe, idari başvuru, sıradan şirket haberi ve geçmiş ziyaret/buluşma haberleri kapsam dışıdır. Ticari hizmet veya şirketlere yararlı bilgi olması yeterli değildir. Eğitim, bootcamp, sertifika ve indirimler kapsam dışıdır. Tek yönlü yayın yerine insanlarla görüşme imkanı sağlayan profesyonel etkinlikleri seç. Katılımcı, tarih veya networking imkanı uydurma; kaynak belirsizse gönderme. Tüm kayıtlar event türünde olmalı ve alıntı somut buluşmayı göstermeli.",
       "target_ref": "main",
       "interval_seconds": 21600,
       "seed_urls": [
@@ -65,18 +68,21 @@
       "include_tags": [],
       "exclude_tags": [],
       "match_mode": "any",
-      "allowed_types": [],
+      "allowed_types": [
+        "event"
+      ],
       "excluded_types": [
         "education",
         "discount"
       ],
       "locations": [],
-      "exclude_past_events": true
+      "exclude_past_events": true,
+      "meeting_only": true
     },
     {
       "id": "erp_erp15",
       "enabled": true,
-      "description": "Türkiye genelinde tüm sektörlerden potansiyel müşteri, tedarikçi, bayi, yatırımcı veya iş ortağıyla tanışılabilecek mesleki ve ticari etkinlikleri geniş kapsamla bul. Amaç ERP konulu etkinlik aramak değil, şirketlerin ve profesyonellerin bir araya geldiği fırsatları keşfetmek. Kaynakta ticari veya mesleki niteliği açık olan fuarları, kongreleri, zirveleri, B2B görüşmelerini, iş forumlarını, oda/OSB buluşmalarını, tedarikçi ve satınalma günlerini, networking toplantılarını, girişimcilik ve yatırımcı buluşmalarını relevant say. Sanayi, üretim, makine, otomasyon, lojistik, mobilya, tekstil, gıda, tarım, ambalaj, enerji, inşaat, akıllı bina, sağlık, perakende, e-ticaret, ihracat, savunma, yazılım, yapay zeka ve siber güvenlik dahil tüm sektörler kapsamdadır. TEKNOFEST gibi teknoloji festivalleri ve mühendislik/üniversite-sanayi buluşmaları da kapsamdadır. MÜSİAD EXPO, mobilya fuarı, dijital baskı fuarı veya akıllı bina fuarı ERP adını anmasa da ticari/mesleki niteliği kaynakta açıksa relevant olmalıdır. ERP, yazılım, dijital dönüşüm veya belirli bir unvanın metinde geçmesini şart koşma; bunların yokluğu uncertain gerekçesi değildir. Belirli şirketlerin katılacağını, ERP ihtiyacını veya entegrasyon imkanı olduğunu uydurma; gerekçede yalnızca kaynakta görülen sektör ve buluşma niteliğini belirt. Tarih veya konum eksikliği tek başına ilgiyi belirsiz yapmaz; eksik alan null olabilir. Henüz gerçekleşmemiş etkinlik duyurularını, katılım çağrılarını ve somut iş ortaklığı/tedarikçi çağrılarını da çıkar. uncertain yalnızca etkinliğin ticari/mesleki niteliği veya profil ile ilişkisi kaynakta gerçekten anlaşılamıyorsa kullanılmalıdır. Eğitim, kurs, bootcamp, sertifika ve indirimler kapsam dışıdır; yan programında eğitim olan bir fuar veya konferans kapsamda kalır. Salt konser, eğlence, spor, yarışma sonucu ve somut etkinlik ya da iş fırsatı içermeyen genel haberleri ele. TÜSİAD Etkinlik ve Duyurular",
+      "description": "Türkiye genelinde tüm sektörlerde insanlarla tanışıp yüz yüze veya karşılıklı etkileşimle iş ilişkisi kurulabilecek, henüz gerçekleşmemiş somut profesyonel buluşmaları bul. Fuar, konferans, kongre, zirve, networking, B2B görüşmesi, sanayici/girişimci/yatırımcı buluşması, oda/OSB iş toplantısı ve teknoloji festivalleri kapsamda. ERP kelimesinin geçmesi gerekmez. Somut katılım fırsatı ve kaynakta yılıyla birlikte açık etkinlik tarihi bulunmalı. Bir konferansın duyurusu event türündedir; sırf duyuru başlığı taşıması engel değildir. Buna karşılık gümrük müşavirleri için vekaleten belge talebi, menşe/dolaşım belgesi, online belge satışı, mevzuat, sirküler, vergi, aidat, ihale, hibe, idari başvuru, sıradan şirket haberi ve geçmiş ziyaret/buluşma haberleri kapsam dışıdır. Ticari hizmet veya şirketlere yararlı bilgi olması yeterli değildir. Eğitim, bootcamp, sertifika ve indirimler kapsam dışıdır. Tek yönlü yayın yerine insanlarla görüşme imkanı sağlayan profesyonel etkinlikleri seç. Katılımcı, tarih veya networking imkanı uydurma; kaynak belirsizse gönderme. Tüm kayıtlar event türünde olmalı ve alıntı somut buluşmayı göstermeli.",
       "target_ref": "main",
       "interval_seconds": 21600,
       "seed_urls": [
@@ -95,18 +101,21 @@
       "include_tags": [],
       "exclude_tags": [],
       "match_mode": "any",
-      "allowed_types": [],
+      "allowed_types": [
+        "event"
+      ],
       "excluded_types": [
         "education",
         "discount"
       ],
       "locations": [],
-      "exclude_past_events": true
+      "exclude_past_events": true,
+      "meeting_only": true
     },
     {
       "id": "erp_erp01",
       "enabled": false,
-      "description": "Türkiye genelinde tüm sektörlerden potansiyel müşteri, tedarikçi, bayi, yatırımcı veya iş ortağıyla tanışılabilecek mesleki ve ticari etkinlikleri geniş kapsamla bul. Amaç ERP konulu etkinlik aramak değil, şirketlerin ve profesyonellerin bir araya geldiği fırsatları keşfetmek. Kaynakta ticari veya mesleki niteliği açık olan fuarları, kongreleri, zirveleri, B2B görüşmelerini, iş forumlarını, oda/OSB buluşmalarını, tedarikçi ve satınalma günlerini, networking toplantılarını, girişimcilik ve yatırımcı buluşmalarını relevant say. Sanayi, üretim, makine, otomasyon, lojistik, mobilya, tekstil, gıda, tarım, ambalaj, enerji, inşaat, akıllı bina, sağlık, perakende, e-ticaret, ihracat, savunma, yazılım, yapay zeka ve siber güvenlik dahil tüm sektörler kapsamdadır. TEKNOFEST gibi teknoloji festivalleri ve mühendislik/üniversite-sanayi buluşmaları da kapsamdadır. MÜSİAD EXPO, mobilya fuarı, dijital baskı fuarı veya akıllı bina fuarı ERP adını anmasa da ticari/mesleki niteliği kaynakta açıksa relevant olmalıdır. ERP, yazılım, dijital dönüşüm veya belirli bir unvanın metinde geçmesini şart koşma; bunların yokluğu uncertain gerekçesi değildir. Belirli şirketlerin katılacağını, ERP ihtiyacını veya entegrasyon imkanı olduğunu uydurma; gerekçede yalnızca kaynakta görülen sektör ve buluşma niteliğini belirt. Tarih veya konum eksikliği tek başına ilgiyi belirsiz yapmaz; eksik alan null olabilir. Henüz gerçekleşmemiş etkinlik duyurularını, katılım çağrılarını ve somut iş ortaklığı/tedarikçi çağrılarını da çıkar. uncertain yalnızca etkinliğin ticari/mesleki niteliği veya profil ile ilişkisi kaynakta gerçekten anlaşılamıyorsa kullanılmalıdır. Eğitim, kurs, bootcamp, sertifika ve indirimler kapsam dışıdır; yan programında eğitim olan bir fuar veya konferans kapsamda kalır. Salt konser, eğlence, spor, yarışma sonucu ve somut etkinlik ya da iş fırsatı içermeyen genel haberleri ele. TOBB Fuar Takvimi",
+      "description": "Türkiye genelinde tüm sektörlerde insanlarla tanışıp yüz yüze veya karşılıklı etkileşimle iş ilişkisi kurulabilecek, henüz gerçekleşmemiş somut profesyonel buluşmaları bul. Fuar, konferans, kongre, zirve, networking, B2B görüşmesi, sanayici/girişimci/yatırımcı buluşması, oda/OSB iş toplantısı ve teknoloji festivalleri kapsamda. ERP kelimesinin geçmesi gerekmez. Somut katılım fırsatı ve kaynakta yılıyla birlikte açık etkinlik tarihi bulunmalı. Bir konferansın duyurusu event türündedir; sırf duyuru başlığı taşıması engel değildir. Buna karşılık gümrük müşavirleri için vekaleten belge talebi, menşe/dolaşım belgesi, online belge satışı, mevzuat, sirküler, vergi, aidat, ihale, hibe, idari başvuru, sıradan şirket haberi ve geçmiş ziyaret/buluşma haberleri kapsam dışıdır. Ticari hizmet veya şirketlere yararlı bilgi olması yeterli değildir. Eğitim, bootcamp, sertifika ve indirimler kapsam dışıdır. Tek yönlü yayın yerine insanlarla görüşme imkanı sağlayan profesyonel etkinlikleri seç. Katılımcı, tarih veya networking imkanı uydurma; kaynak belirsizse gönderme. Tüm kayıtlar event türünde olmalı ve alıntı somut buluşmayı göstermeli.",
       "target_ref": "main",
       "interval_seconds": 21600,
       "seed_urls": [
@@ -125,18 +134,21 @@
       "include_tags": [],
       "exclude_tags": [],
       "match_mode": "any",
-      "allowed_types": [],
+      "allowed_types": [
+        "event"
+      ],
       "excluded_types": [
         "education",
         "discount"
       ],
       "locations": [],
-      "exclude_past_events": true
+      "exclude_past_events": true,
+      "meeting_only": true
     },
     {
       "id": "erp_erp02",
       "enabled": false,
-      "description": "Türkiye genelinde tüm sektörlerden potansiyel müşteri, tedarikçi, bayi, yatırımcı veya iş ortağıyla tanışılabilecek mesleki ve ticari etkinlikleri geniş kapsamla bul. Amaç ERP konulu etkinlik aramak değil, şirketlerin ve profesyonellerin bir araya geldiği fırsatları keşfetmek. Kaynakta ticari veya mesleki niteliği açık olan fuarları, kongreleri, zirveleri, B2B görüşmelerini, iş forumlarını, oda/OSB buluşmalarını, tedarikçi ve satınalma günlerini, networking toplantılarını, girişimcilik ve yatırımcı buluşmalarını relevant say. Sanayi, üretim, makine, otomasyon, lojistik, mobilya, tekstil, gıda, tarım, ambalaj, enerji, inşaat, akıllı bina, sağlık, perakende, e-ticaret, ihracat, savunma, yazılım, yapay zeka ve siber güvenlik dahil tüm sektörler kapsamdadır. TEKNOFEST gibi teknoloji festivalleri ve mühendislik/üniversite-sanayi buluşmaları da kapsamdadır. MÜSİAD EXPO, mobilya fuarı, dijital baskı fuarı veya akıllı bina fuarı ERP adını anmasa da ticari/mesleki niteliği kaynakta açıksa relevant olmalıdır. ERP, yazılım, dijital dönüşüm veya belirli bir unvanın metinde geçmesini şart koşma; bunların yokluğu uncertain gerekçesi değildir. Belirli şirketlerin katılacağını, ERP ihtiyacını veya entegrasyon imkanı olduğunu uydurma; gerekçede yalnızca kaynakta görülen sektör ve buluşma niteliğini belirt. Tarih veya konum eksikliği tek başına ilgiyi belirsiz yapmaz; eksik alan null olabilir. Henüz gerçekleşmemiş etkinlik duyurularını, katılım çağrılarını ve somut iş ortaklığı/tedarikçi çağrılarını da çıkar. uncertain yalnızca etkinliğin ticari/mesleki niteliği veya profil ile ilişkisi kaynakta gerçekten anlaşılamıyorsa kullanılmalıdır. Eğitim, kurs, bootcamp, sertifika ve indirimler kapsam dışıdır; yan programında eğitim olan bir fuar veya konferans kapsamda kalır. Salt konser, eğlence, spor, yarışma sonucu ve somut etkinlik ya da iş fırsatı içermeyen genel haberleri ele. TÜYAP",
+      "description": "Türkiye genelinde tüm sektörlerde insanlarla tanışıp yüz yüze veya karşılıklı etkileşimle iş ilişkisi kurulabilecek, henüz gerçekleşmemiş somut profesyonel buluşmaları bul. Fuar, konferans, kongre, zirve, networking, B2B görüşmesi, sanayici/girişimci/yatırımcı buluşması, oda/OSB iş toplantısı ve teknoloji festivalleri kapsamda. ERP kelimesinin geçmesi gerekmez. Somut katılım fırsatı ve kaynakta yılıyla birlikte açık etkinlik tarihi bulunmalı. Bir konferansın duyurusu event türündedir; sırf duyuru başlığı taşıması engel değildir. Buna karşılık gümrük müşavirleri için vekaleten belge talebi, menşe/dolaşım belgesi, online belge satışı, mevzuat, sirküler, vergi, aidat, ihale, hibe, idari başvuru, sıradan şirket haberi ve geçmiş ziyaret/buluşma haberleri kapsam dışıdır. Ticari hizmet veya şirketlere yararlı bilgi olması yeterli değildir. Eğitim, bootcamp, sertifika ve indirimler kapsam dışıdır. Tek yönlü yayın yerine insanlarla görüşme imkanı sağlayan profesyonel etkinlikleri seç. Katılımcı, tarih veya networking imkanı uydurma; kaynak belirsizse gönderme. Tüm kayıtlar event türünde olmalı ve alıntı somut buluşmayı göstermeli.",
       "target_ref": "main",
       "interval_seconds": 21600,
       "seed_urls": [
@@ -155,18 +167,21 @@
       "include_tags": [],
       "exclude_tags": [],
       "match_mode": "any",
-      "allowed_types": [],
+      "allowed_types": [
+        "event"
+      ],
       "excluded_types": [
         "education",
         "discount"
       ],
       "locations": [],
-      "exclude_past_events": true
+      "exclude_past_events": true,
+      "meeting_only": true
     },
     {
       "id": "erp_erp03",
       "enabled": false,
-      "description": "Türkiye genelinde tüm sektörlerden potansiyel müşteri, tedarikçi, bayi, yatırımcı veya iş ortağıyla tanışılabilecek mesleki ve ticari etkinlikleri geniş kapsamla bul. Amaç ERP konulu etkinlik aramak değil, şirketlerin ve profesyonellerin bir araya geldiği fırsatları keşfetmek. Kaynakta ticari veya mesleki niteliği açık olan fuarları, kongreleri, zirveleri, B2B görüşmelerini, iş forumlarını, oda/OSB buluşmalarını, tedarikçi ve satınalma günlerini, networking toplantılarını, girişimcilik ve yatırımcı buluşmalarını relevant say. Sanayi, üretim, makine, otomasyon, lojistik, mobilya, tekstil, gıda, tarım, ambalaj, enerji, inşaat, akıllı bina, sağlık, perakende, e-ticaret, ihracat, savunma, yazılım, yapay zeka ve siber güvenlik dahil tüm sektörler kapsamdadır. TEKNOFEST gibi teknoloji festivalleri ve mühendislik/üniversite-sanayi buluşmaları da kapsamdadır. MÜSİAD EXPO, mobilya fuarı, dijital baskı fuarı veya akıllı bina fuarı ERP adını anmasa da ticari/mesleki niteliği kaynakta açıksa relevant olmalıdır. ERP, yazılım, dijital dönüşüm veya belirli bir unvanın metinde geçmesini şart koşma; bunların yokluğu uncertain gerekçesi değildir. Belirli şirketlerin katılacağını, ERP ihtiyacını veya entegrasyon imkanı olduğunu uydurma; gerekçede yalnızca kaynakta görülen sektör ve buluşma niteliğini belirt. Tarih veya konum eksikliği tek başına ilgiyi belirsiz yapmaz; eksik alan null olabilir. Henüz gerçekleşmemiş etkinlik duyurularını, katılım çağrılarını ve somut iş ortaklığı/tedarikçi çağrılarını da çıkar. uncertain yalnızca etkinliğin ticari/mesleki niteliği veya profil ile ilişkisi kaynakta gerçekten anlaşılamıyorsa kullanılmalıdır. Eğitim, kurs, bootcamp, sertifika ve indirimler kapsam dışıdır; yan programında eğitim olan bir fuar veya konferans kapsamda kalır. Salt konser, eğlence, spor, yarışma sonucu ve somut etkinlik ya da iş fırsatı içermeyen genel haberleri ele. İstanbul Fuar Merkezi",
+      "description": "Türkiye genelinde tüm sektörlerde insanlarla tanışıp yüz yüze veya karşılıklı etkileşimle iş ilişkisi kurulabilecek, henüz gerçekleşmemiş somut profesyonel buluşmaları bul. Fuar, konferans, kongre, zirve, networking, B2B görüşmesi, sanayici/girişimci/yatırımcı buluşması, oda/OSB iş toplantısı ve teknoloji festivalleri kapsamda. ERP kelimesinin geçmesi gerekmez. Somut katılım fırsatı ve kaynakta yılıyla birlikte açık etkinlik tarihi bulunmalı. Bir konferansın duyurusu event türündedir; sırf duyuru başlığı taşıması engel değildir. Buna karşılık gümrük müşavirleri için vekaleten belge talebi, menşe/dolaşım belgesi, online belge satışı, mevzuat, sirküler, vergi, aidat, ihale, hibe, idari başvuru, sıradan şirket haberi ve geçmiş ziyaret/buluşma haberleri kapsam dışıdır. Ticari hizmet veya şirketlere yararlı bilgi olması yeterli değildir. Eğitim, bootcamp, sertifika ve indirimler kapsam dışıdır. Tek yönlü yayın yerine insanlarla görüşme imkanı sağlayan profesyonel etkinlikleri seç. Katılımcı, tarih veya networking imkanı uydurma; kaynak belirsizse gönderme. Tüm kayıtlar event türünde olmalı ve alıntı somut buluşmayı göstermeli.",
       "target_ref": "main",
       "interval_seconds": 21600,
       "seed_urls": [
@@ -185,18 +200,21 @@
       "include_tags": [],
       "exclude_tags": [],
       "match_mode": "any",
-      "allowed_types": [],
+      "allowed_types": [
+        "event"
+      ],
       "excluded_types": [
         "education",
         "discount"
       ],
       "locations": [],
-      "exclude_past_events": true
+      "exclude_past_events": true,
+      "meeting_only": true
     },
     {
       "id": "erp_erp08",
       "enabled": false,
-      "description": "Türkiye genelinde tüm sektörlerden potansiyel müşteri, tedarikçi, bayi, yatırımcı veya iş ortağıyla tanışılabilecek mesleki ve ticari etkinlikleri geniş kapsamla bul. Amaç ERP konulu etkinlik aramak değil, şirketlerin ve profesyonellerin bir araya geldiği fırsatları keşfetmek. Kaynakta ticari veya mesleki niteliği açık olan fuarları, kongreleri, zirveleri, B2B görüşmelerini, iş forumlarını, oda/OSB buluşmalarını, tedarikçi ve satınalma günlerini, networking toplantılarını, girişimcilik ve yatırımcı buluşmalarını relevant say. Sanayi, üretim, makine, otomasyon, lojistik, mobilya, tekstil, gıda, tarım, ambalaj, enerji, inşaat, akıllı bina, sağlık, perakende, e-ticaret, ihracat, savunma, yazılım, yapay zeka ve siber güvenlik dahil tüm sektörler kapsamdadır. TEKNOFEST gibi teknoloji festivalleri ve mühendislik/üniversite-sanayi buluşmaları da kapsamdadır. MÜSİAD EXPO, mobilya fuarı, dijital baskı fuarı veya akıllı bina fuarı ERP adını anmasa da ticari/mesleki niteliği kaynakta açıksa relevant olmalıdır. ERP, yazılım, dijital dönüşüm veya belirli bir unvanın metinde geçmesini şart koşma; bunların yokluğu uncertain gerekçesi değildir. Belirli şirketlerin katılacağını, ERP ihtiyacını veya entegrasyon imkanı olduğunu uydurma; gerekçede yalnızca kaynakta görülen sektör ve buluşma niteliğini belirt. Tarih veya konum eksikliği tek başına ilgiyi belirsiz yapmaz; eksik alan null olabilir. Henüz gerçekleşmemiş etkinlik duyurularını, katılım çağrılarını ve somut iş ortaklığı/tedarikçi çağrılarını da çıkar. uncertain yalnızca etkinliğin ticari/mesleki niteliği veya profil ile ilişkisi kaynakta gerçekten anlaşılamıyorsa kullanılmalıdır. Eğitim, kurs, bootcamp, sertifika ve indirimler kapsam dışıdır; yan programında eğitim olan bir fuar veya konferans kapsamda kalır. Salt konser, eğlence, spor, yarışma sonucu ve somut etkinlik ya da iş fırsatı içermeyen genel haberleri ele. İstanbul Sanayi Odası",
+      "description": "Türkiye genelinde tüm sektörlerde insanlarla tanışıp yüz yüze veya karşılıklı etkileşimle iş ilişkisi kurulabilecek, henüz gerçekleşmemiş somut profesyonel buluşmaları bul. Fuar, konferans, kongre, zirve, networking, B2B görüşmesi, sanayici/girişimci/yatırımcı buluşması, oda/OSB iş toplantısı ve teknoloji festivalleri kapsamda. ERP kelimesinin geçmesi gerekmez. Somut katılım fırsatı ve kaynakta yılıyla birlikte açık etkinlik tarihi bulunmalı. Bir konferansın duyurusu event türündedir; sırf duyuru başlığı taşıması engel değildir. Buna karşılık gümrük müşavirleri için vekaleten belge talebi, menşe/dolaşım belgesi, online belge satışı, mevzuat, sirküler, vergi, aidat, ihale, hibe, idari başvuru, sıradan şirket haberi ve geçmiş ziyaret/buluşma haberleri kapsam dışıdır. Ticari hizmet veya şirketlere yararlı bilgi olması yeterli değildir. Eğitim, bootcamp, sertifika ve indirimler kapsam dışıdır. Tek yönlü yayın yerine insanlarla görüşme imkanı sağlayan profesyonel etkinlikleri seç. Katılımcı, tarih veya networking imkanı uydurma; kaynak belirsizse gönderme. Tüm kayıtlar event türünde olmalı ve alıntı somut buluşmayı göstermeli.",
       "target_ref": "main",
       "interval_seconds": 21600,
       "seed_urls": [
@@ -215,18 +233,21 @@
       "include_tags": [],
       "exclude_tags": [],
       "match_mode": "any",
-      "allowed_types": [],
+      "allowed_types": [
+        "event"
+      ],
       "excluded_types": [
         "education",
         "discount"
       ],
       "locations": [],
-      "exclude_past_events": true
+      "exclude_past_events": true,
+      "meeting_only": true
     },
     {
       "id": "erp_erp09",
       "enabled": false,
-      "description": "Türkiye genelinde tüm sektörlerden potansiyel müşteri, tedarikçi, bayi, yatırımcı veya iş ortağıyla tanışılabilecek mesleki ve ticari etkinlikleri geniş kapsamla bul. Amaç ERP konulu etkinlik aramak değil, şirketlerin ve profesyonellerin bir araya geldiği fırsatları keşfetmek. Kaynakta ticari veya mesleki niteliği açık olan fuarları, kongreleri, zirveleri, B2B görüşmelerini, iş forumlarını, oda/OSB buluşmalarını, tedarikçi ve satınalma günlerini, networking toplantılarını, girişimcilik ve yatırımcı buluşmalarını relevant say. Sanayi, üretim, makine, otomasyon, lojistik, mobilya, tekstil, gıda, tarım, ambalaj, enerji, inşaat, akıllı bina, sağlık, perakende, e-ticaret, ihracat, savunma, yazılım, yapay zeka ve siber güvenlik dahil tüm sektörler kapsamdadır. TEKNOFEST gibi teknoloji festivalleri ve mühendislik/üniversite-sanayi buluşmaları da kapsamdadır. MÜSİAD EXPO, mobilya fuarı, dijital baskı fuarı veya akıllı bina fuarı ERP adını anmasa da ticari/mesleki niteliği kaynakta açıksa relevant olmalıdır. ERP, yazılım, dijital dönüşüm veya belirli bir unvanın metinde geçmesini şart koşma; bunların yokluğu uncertain gerekçesi değildir. Belirli şirketlerin katılacağını, ERP ihtiyacını veya entegrasyon imkanı olduğunu uydurma; gerekçede yalnızca kaynakta görülen sektör ve buluşma niteliğini belirt. Tarih veya konum eksikliği tek başına ilgiyi belirsiz yapmaz; eksik alan null olabilir. Henüz gerçekleşmemiş etkinlik duyurularını, katılım çağrılarını ve somut iş ortaklığı/tedarikçi çağrılarını da çıkar. uncertain yalnızca etkinliğin ticari/mesleki niteliği veya profil ile ilişkisi kaynakta gerçekten anlaşılamıyorsa kullanılmalıdır. Eğitim, kurs, bootcamp, sertifika ve indirimler kapsam dışıdır; yan programında eğitim olan bir fuar veya konferans kapsamda kalır. Salt konser, eğlence, spor, yarışma sonucu ve somut etkinlik ya da iş fırsatı içermeyen genel haberleri ele. Ankara Sanayi Odası",
+      "description": "Türkiye genelinde tüm sektörlerde insanlarla tanışıp yüz yüze veya karşılıklı etkileşimle iş ilişkisi kurulabilecek, henüz gerçekleşmemiş somut profesyonel buluşmaları bul. Fuar, konferans, kongre, zirve, networking, B2B görüşmesi, sanayici/girişimci/yatırımcı buluşması, oda/OSB iş toplantısı ve teknoloji festivalleri kapsamda. ERP kelimesinin geçmesi gerekmez. Somut katılım fırsatı ve kaynakta yılıyla birlikte açık etkinlik tarihi bulunmalı. Bir konferansın duyurusu event türündedir; sırf duyuru başlığı taşıması engel değildir. Buna karşılık gümrük müşavirleri için vekaleten belge talebi, menşe/dolaşım belgesi, online belge satışı, mevzuat, sirküler, vergi, aidat, ihale, hibe, idari başvuru, sıradan şirket haberi ve geçmiş ziyaret/buluşma haberleri kapsam dışıdır. Ticari hizmet veya şirketlere yararlı bilgi olması yeterli değildir. Eğitim, bootcamp, sertifika ve indirimler kapsam dışıdır. Tek yönlü yayın yerine insanlarla görüşme imkanı sağlayan profesyonel etkinlikleri seç. Katılımcı, tarih veya networking imkanı uydurma; kaynak belirsizse gönderme. Tüm kayıtlar event türünde olmalı ve alıntı somut buluşmayı göstermeli.",
       "target_ref": "main",
       "interval_seconds": 21600,
       "seed_urls": [
@@ -245,18 +266,21 @@
       "include_tags": [],
       "exclude_tags": [],
       "match_mode": "any",
-      "allowed_types": [],
+      "allowed_types": [
+        "event"
+      ],
       "excluded_types": [
         "education",
         "discount"
       ],
       "locations": [],
-      "exclude_past_events": true
+      "exclude_past_events": true,
+      "meeting_only": true
     },
     {
       "id": "erp_erp10",
       "enabled": false,
-      "description": "Türkiye genelinde tüm sektörlerden potansiyel müşteri, tedarikçi, bayi, yatırımcı veya iş ortağıyla tanışılabilecek mesleki ve ticari etkinlikleri geniş kapsamla bul. Amaç ERP konulu etkinlik aramak değil, şirketlerin ve profesyonellerin bir araya geldiği fırsatları keşfetmek. Kaynakta ticari veya mesleki niteliği açık olan fuarları, kongreleri, zirveleri, B2B görüşmelerini, iş forumlarını, oda/OSB buluşmalarını, tedarikçi ve satınalma günlerini, networking toplantılarını, girişimcilik ve yatırımcı buluşmalarını relevant say. Sanayi, üretim, makine, otomasyon, lojistik, mobilya, tekstil, gıda, tarım, ambalaj, enerji, inşaat, akıllı bina, sağlık, perakende, e-ticaret, ihracat, savunma, yazılım, yapay zeka ve siber güvenlik dahil tüm sektörler kapsamdadır. TEKNOFEST gibi teknoloji festivalleri ve mühendislik/üniversite-sanayi buluşmaları da kapsamdadır. MÜSİAD EXPO, mobilya fuarı, dijital baskı fuarı veya akıllı bina fuarı ERP adını anmasa da ticari/mesleki niteliği kaynakta açıksa relevant olmalıdır. ERP, yazılım, dijital dönüşüm veya belirli bir unvanın metinde geçmesini şart koşma; bunların yokluğu uncertain gerekçesi değildir. Belirli şirketlerin katılacağını, ERP ihtiyacını veya entegrasyon imkanı olduğunu uydurma; gerekçede yalnızca kaynakta görülen sektör ve buluşma niteliğini belirt. Tarih veya konum eksikliği tek başına ilgiyi belirsiz yapmaz; eksik alan null olabilir. Henüz gerçekleşmemiş etkinlik duyurularını, katılım çağrılarını ve somut iş ortaklığı/tedarikçi çağrılarını da çıkar. uncertain yalnızca etkinliğin ticari/mesleki niteliği veya profil ile ilişkisi kaynakta gerçekten anlaşılamıyorsa kullanılmalıdır. Eğitim, kurs, bootcamp, sertifika ve indirimler kapsam dışıdır; yan programında eğitim olan bir fuar veya konferans kapsamda kalır. Salt konser, eğlence, spor, yarışma sonucu ve somut etkinlik ya da iş fırsatı içermeyen genel haberleri ele. Bursa Ticaret ve Sanayi Odası",
+      "description": "Türkiye genelinde tüm sektörlerde insanlarla tanışıp yüz yüze veya karşılıklı etkileşimle iş ilişkisi kurulabilecek, henüz gerçekleşmemiş somut profesyonel buluşmaları bul. Fuar, konferans, kongre, zirve, networking, B2B görüşmesi, sanayici/girişimci/yatırımcı buluşması, oda/OSB iş toplantısı ve teknoloji festivalleri kapsamda. ERP kelimesinin geçmesi gerekmez. Somut katılım fırsatı ve kaynakta yılıyla birlikte açık etkinlik tarihi bulunmalı. Bir konferansın duyurusu event türündedir; sırf duyuru başlığı taşıması engel değildir. Buna karşılık gümrük müşavirleri için vekaleten belge talebi, menşe/dolaşım belgesi, online belge satışı, mevzuat, sirküler, vergi, aidat, ihale, hibe, idari başvuru, sıradan şirket haberi ve geçmiş ziyaret/buluşma haberleri kapsam dışıdır. Ticari hizmet veya şirketlere yararlı bilgi olması yeterli değildir. Eğitim, bootcamp, sertifika ve indirimler kapsam dışıdır. Tek yönlü yayın yerine insanlarla görüşme imkanı sağlayan profesyonel etkinlikleri seç. Katılımcı, tarih veya networking imkanı uydurma; kaynak belirsizse gönderme. Tüm kayıtlar event türünde olmalı ve alıntı somut buluşmayı göstermeli.",
       "target_ref": "main",
       "interval_seconds": 21600,
       "seed_urls": [
@@ -275,18 +299,21 @@
       "include_tags": [],
       "exclude_tags": [],
       "match_mode": "any",
-      "allowed_types": [],
+      "allowed_types": [
+        "event"
+      ],
       "excluded_types": [
         "education",
         "discount"
       ],
       "locations": [],
-      "exclude_past_events": true
+      "exclude_past_events": true,
+      "meeting_only": true
     },
     {
       "id": "erp_erp19",
       "enabled": false,
-      "description": "Türkiye genelinde tüm sektörlerden potansiyel müşteri, tedarikçi, bayi, yatırımcı veya iş ortağıyla tanışılabilecek mesleki ve ticari etkinlikleri geniş kapsamla bul. Amaç ERP konulu etkinlik aramak değil, şirketlerin ve profesyonellerin bir araya geldiği fırsatları keşfetmek. Kaynakta ticari veya mesleki niteliği açık olan fuarları, kongreleri, zirveleri, B2B görüşmelerini, iş forumlarını, oda/OSB buluşmalarını, tedarikçi ve satınalma günlerini, networking toplantılarını, girişimcilik ve yatırımcı buluşmalarını relevant say. Sanayi, üretim, makine, otomasyon, lojistik, mobilya, tekstil, gıda, tarım, ambalaj, enerji, inşaat, akıllı bina, sağlık, perakende, e-ticaret, ihracat, savunma, yazılım, yapay zeka ve siber güvenlik dahil tüm sektörler kapsamdadır. TEKNOFEST gibi teknoloji festivalleri ve mühendislik/üniversite-sanayi buluşmaları da kapsamdadır. MÜSİAD EXPO, mobilya fuarı, dijital baskı fuarı veya akıllı bina fuarı ERP adını anmasa da ticari/mesleki niteliği kaynakta açıksa relevant olmalıdır. ERP, yazılım, dijital dönüşüm veya belirli bir unvanın metinde geçmesini şart koşma; bunların yokluğu uncertain gerekçesi değildir. Belirli şirketlerin katılacağını, ERP ihtiyacını veya entegrasyon imkanı olduğunu uydurma; gerekçede yalnızca kaynakta görülen sektör ve buluşma niteliğini belirt. Tarih veya konum eksikliği tek başına ilgiyi belirsiz yapmaz; eksik alan null olabilir. Henüz gerçekleşmemiş etkinlik duyurularını, katılım çağrılarını ve somut iş ortaklığı/tedarikçi çağrılarını da çıkar. uncertain yalnızca etkinliğin ticari/mesleki niteliği veya profil ile ilişkisi kaynakta gerçekten anlaşılamıyorsa kullanılmalıdır. Eğitim, kurs, bootcamp, sertifika ve indirimler kapsam dışıdır; yan programında eğitim olan bir fuar veya konferans kapsamda kalır. Salt konser, eğlence, spor, yarışma sonucu ve somut etkinlik ya da iş fırsatı içermeyen genel haberleri ele. ST Endüstri",
+      "description": "Türkiye genelinde tüm sektörlerde insanlarla tanışıp yüz yüze veya karşılıklı etkileşimle iş ilişkisi kurulabilecek, henüz gerçekleşmemiş somut profesyonel buluşmaları bul. Fuar, konferans, kongre, zirve, networking, B2B görüşmesi, sanayici/girişimci/yatırımcı buluşması, oda/OSB iş toplantısı ve teknoloji festivalleri kapsamda. ERP kelimesinin geçmesi gerekmez. Somut katılım fırsatı ve kaynakta yılıyla birlikte açık etkinlik tarihi bulunmalı. Bir konferansın duyurusu event türündedir; sırf duyuru başlığı taşıması engel değildir. Buna karşılık gümrük müşavirleri için vekaleten belge talebi, menşe/dolaşım belgesi, online belge satışı, mevzuat, sirküler, vergi, aidat, ihale, hibe, idari başvuru, sıradan şirket haberi ve geçmiş ziyaret/buluşma haberleri kapsam dışıdır. Ticari hizmet veya şirketlere yararlı bilgi olması yeterli değildir. Eğitim, bootcamp, sertifika ve indirimler kapsam dışıdır. Tek yönlü yayın yerine insanlarla görüşme imkanı sağlayan profesyonel etkinlikleri seç. Katılımcı, tarih veya networking imkanı uydurma; kaynak belirsizse gönderme. Tüm kayıtlar event türünde olmalı ve alıntı somut buluşmayı göstermeli.",
       "target_ref": "main",
       "interval_seconds": 21600,
       "seed_urls": [
@@ -305,13 +332,16 @@
       "include_tags": [],
       "exclude_tags": [],
       "match_mode": "any",
-      "allowed_types": [],
+      "allowed_types": [
+        "event"
+      ],
       "excluded_types": [
         "education",
         "discount"
       ],
       "locations": [],
-      "exclude_past_events": true
+      "exclude_past_events": true,
+      "meeting_only": true
     }
   ]
 }

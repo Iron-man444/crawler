@@ -71,7 +71,8 @@ module Radar
     def fail_job(job, error)
       deferred = %w[host_wait daily_budget].include?(error.code)
       attempts = job["attempts"] + (deferred ? 0 : 1)
-      state = error.permanent || attempts >= 5 ? "review" : "pending"
+      attempt_limit = error.code.start_with?("llm_") ? 2 : 5
+      state = error.permanent || attempts >= attempt_limit ? "review" : "pending"
       delay = [error.delay, deferred ? 1 : 30 * 2**[attempts, 8].min + rand(10)].max
       query("UPDATE radar_jobs SET state=$2,attempts=$3,error=$4,available_at=now()+$5*interval '1 second',lease_until=NULL,updated_at=now() WHERE id=$1", [job["id"], state, attempts, error.code, delay])
     end
@@ -148,6 +149,17 @@ module Radar
       raise WorkError.new("daily_budget", delay: 3600) if rows.empty?
     end
 
+    def record_llm_call(settings, profile, url, chars, outcome)
+      query("INSERT INTO radar_llm_calls(provider,model,profile_id,source_url,input_chars,outcome) VALUES($1,$2,$3,$4,$5,$6)",
+        [settings["provider"], settings["model"], profile["id"], url, chars, outcome])
+    end
+
+    def audit
+      { "llm_last_24h" => query("SELECT provider,model,profile_id,outcome,count(*)::integer AS calls,sum(input_chars)::bigint AS source_chars FROM radar_llm_calls WHERE created_at>now()-interval '24 hours' GROUP BY provider,model,profile_id,outcome ORDER BY calls DESC"),
+        "expensive_pages" => query("SELECT source_url,count(*)::integer AS calls FROM radar_llm_calls WHERE created_at>now()-interval '24 hours' GROUP BY source_url ORDER BY calls DESC LIMIT 20"),
+        "recent_notifications" => query("SELECT o.state,o.error,o.created_at,o.payload->>'url' AS url,o.payload->'item'->>'title' AS title,o.payload->'item'->>'type' AS type,o.payload->'item'->>'date' AS date,o.payload->'item'->>'reason' AS reason FROM radar_outbox o ORDER BY o.created_at DESC LIMIT 50") }
+    end
+
     def discover(profile, result, query_text, allowed)
       query(<<~SQL, [profile, result["link"], query_text, result["title"], result["snippet"], allowed ? "approved" : "review_new_domain"])
         INSERT INTO radar_discovery(profile_id,url,query,title,snippet,state) VALUES($1,$2,$3,$4,$5,$6)
@@ -179,11 +191,39 @@ module Radar
       end
     end
 
-    def claim_delivery
+    def notification_fingerprint(item)
+      Radar.digest([Filter.normalize(item["title"]), item["date"], Filter.normalize(item["location"])])
+    end
+
+    def claim_delivery(profiles: nil)
       transaction do
         # An expired delivery may have reached Telegram. Hold for manual reconciliation.
         query("UPDATE radar_outbox SET state='unknown_delivery',error='lease_expired' WHERE state='sending' AND lease_until<now()")
-        row = query("SELECT id FROM radar_outbox WHERE state='pending' AND available_at<=now() ORDER BY created_at FOR UPDATE SKIP LOCKED LIMIT 1").first
+        row = nil
+        # Recheck queued payloads against today's active policy; old unwanted notices must not leak.
+        candidates = query("SELECT o.id,o.target_ref,o.payload,i.profile_id FROM radar_outbox o JOIN radar_events e ON e.id=o.event_id JOIN radar_items i ON i.key=e.item_key WHERE o.state='pending' AND o.available_at<=now() ORDER BY o.created_at FOR UPDATE OF o SKIP LOCKED LIMIT 100")
+        candidates.each do |candidate|
+          p = profiles&.find { |profile| profile["id"] == candidate["profile_id"] }
+          item = candidate["payload"].fetch("item")
+          rejection = profiles && (p ? Filter.decision(item, p) : "profile_disabled")
+          rejection = nil if rejection == "matched"
+          if !rejection && p && p.fetch("meeting_only", false)
+            fingerprint = notification_fingerprint(item)
+            # Include pre-upgrade sent/uncertain deliveries in deduplication without replaying them.
+            previous = query("SELECT id,payload FROM radar_outbox WHERE target_ref=$1 AND id<>$2 AND state IN ('sent','sending','unknown_delivery') AND payload->'item'->>'date'=$3", [candidate["target_ref"], candidate["id"], item["date"]])
+            rejection = "duplicate_event" if previous.any? { |r| notification_fingerprint(r["payload"]["item"]) == fingerprint }
+            unless rejection
+              reserved = query("INSERT INTO radar_notification_keys(target_ref,fingerprint,delivery_id) VALUES($1,$2,$3) ON CONFLICT(target_ref,fingerprint) DO UPDATE SET delivery_id=radar_notification_keys.delivery_id RETURNING delivery_id", [candidate["target_ref"], fingerprint, candidate["id"]]).first
+              rejection = "duplicate_event" if reserved["delivery_id"] != candidate["id"]
+            end
+          end
+          if rejection
+            query("UPDATE radar_outbox SET state='suppressed',error=$2 WHERE id=$1", [candidate["id"], rejection])
+          else
+            row = candidate
+            break
+          end
+        end
         next nil unless row
         token = SecureRandom.hex(24)
         job = query("UPDATE radar_outbox SET state='sending',claim_token=$2,lease_until=now()+interval '5 minutes',attempts=attempts+1 WHERE id=$1 RETURNING id AS delivery_id,claim_token,lease_until,target_ref,payload", [row["id"], token]).first

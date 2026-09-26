@@ -167,6 +167,7 @@ class IntegrationTest < Minitest::Test
 
   def test_api_auth_and_real_local_claim_ack
     c = config
+    c.data["profiles"] = [profile]
     c.data["port"] = 0
     api = Radar::API.new(c, @store, token: "t" * 32)
     port = api.instance_variable_get(:@server).config[:Port]
@@ -314,6 +315,42 @@ class IntegrationTest < Minitest::Test
     runner = Radar::Runner.new(config, @store, http: http)
     assert_equal "robots_redirect_requires_review", assert_raises(Radar::WorkError) { runner.check_robots("https://example.org/events", profile) }.code
     assert_equal 1, http.calls.size
+  end
+
+  def test_queued_notices_are_suppressed_and_duplicate_events_are_sent_once
+    p = profile.merge("meeting_only" => true, "allowed_types" => ["event"], "include_words" => [], "exclude_words" => [])
+    old = p.merge("meeting_only" => false, "allowed_types" => [])
+    notice = item.merge("title" => "Gümrük Müşavirleri için Vekaleten Belge Talebi", "type" => "announcement", "date" => nil)
+    @store.apply_items(old, "https://example.org/belge", [notice], silent: false)
+    event = item.merge("evidence" => "Yazılım Buluşması 15 Ekim 2030 tarihinde İstanbul'da düzenlenecek.")
+    @store.apply_items(p, "https://example.org/event", [event], silent: false)
+    @store.apply_items(p, "https://another.test/event", [event], silent: false)
+    job = @store.claim_delivery(profiles: [p])
+    assert_equal event["title"], job.dig("payload", "item", "title")
+    assert @store.delivery_action(job["delivery_id"], "fail", job.merge("type" => "transient", "retry_after" => 1))
+    @store.query("UPDATE radar_outbox SET available_at=now()-interval '1 second' WHERE id=$1", [job["delivery_id"]])
+    retried = @store.claim_delivery(profiles: [p])
+    assert_equal job["delivery_id"], retried["delivery_id"]
+    assert @store.delivery_action(retried["delivery_id"], "ack", retried.merge("message_id" => "55"))
+    assert_nil @store.claim_delivery(profiles: [p])
+    assert_equal 2, @store.query("SELECT count(*)::integer AS n FROM radar_outbox WHERE state='suppressed'").first["n"]
+  end
+
+  def test_new_call_audit_records_success_and_failure_without_secrets
+    @store.record_llm_call(config["llm"], profile, "https://example.org/event", 6000, "ok")
+    @store.record_llm_call(config["llm"], profile, "https://example.org/event", 6000, "llm_unverified_evidence")
+    report = @store.audit
+    assert_equal 2, report["expensive_pages"].first["calls"]
+    assert_equal %w[llm_unverified_evidence ok], report["llm_last_24h"].map { |r| r["outcome"] }.sort
+  end
+
+  def test_bad_llm_output_stops_after_two_attempts
+    @store.enqueue("analyze", profile["id"], {}, key: "bad-response")
+    2.times do
+      @store.query("UPDATE radar_jobs SET available_at=now()-interval '1 second'")
+      @store.fail_job(@store.claim_job, Radar::WorkError.new("llm_unverified_evidence"))
+    end
+    assert_equal "review", @store.query("SELECT state FROM radar_jobs WHERE key='bad-response'").first["state"]
   end
 
   private

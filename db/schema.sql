@@ -50,6 +50,16 @@ ALTER TABLE radar_hosts ADD COLUMN IF NOT EXISTS robots_redirects integer NOT NU
 CREATE TABLE IF NOT EXISTS radar_usage (
   day date NOT NULL, provider text NOT NULL, calls integer NOT NULL, PRIMARY KEY(day,provider)
 );
+CREATE TABLE IF NOT EXISTS radar_llm_calls (
+  id bigserial PRIMARY KEY, created_at timestamptz NOT NULL DEFAULT now(),
+  provider text NOT NULL, model text NOT NULL, profile_id text NOT NULL,
+  source_url text, input_chars integer NOT NULL, outcome text NOT NULL
+);
+CREATE INDEX IF NOT EXISTS radar_llm_calls_time ON radar_llm_calls(created_at);
+CREATE TABLE IF NOT EXISTS radar_notification_keys (
+  target_ref text NOT NULL, fingerprint text NOT NULL, delivery_id text NOT NULL,
+  PRIMARY KEY(target_ref, fingerprint)
+);
 CREATE TABLE IF NOT EXISTS radar_analysis_cache (
   key text PRIMARY KEY, items jsonb NOT NULL, created_at timestamptz NOT NULL DEFAULT now()
 );

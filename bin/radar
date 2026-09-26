@@ -8,7 +8,7 @@ store = nil
 begin
   case command
   when "help", "--help", "-h"
-    puts "radar validate | migrate | once | run | status | sources | review | retry-crawls | retry-job ID | unblock-host HOST | resolve-delivery ID sent/retry"
+    puts "radar validate | migrate | once | run | status | sources | audit | review | retry-crawls | retry-job ID | unblock-host HOST | resolve-delivery ID sent/retry"
     puts "Ayar dosyası: RADAR_CONFIG (varsayılan config/settings.json). Sırlar: ortam değişkenleri."
   when "validate", "check-env"
     config = Radar::Config.new(path)
@@ -24,6 +24,8 @@ begin
       puts JSON.pretty_generate(command == "status" ? store.status : store.review)
     when "sources"
       puts JSON.pretty_generate(store.sources(Radar::Config.new(path).profiles))
+    when "audit"
+      puts JSON.pretty_generate(store.audit)
     when "retry-crawls"
       puts "Yeniden kuyruğa alınan tarama: #{store.retry_crawls(Radar::Config.new(path).profiles)}"
     when "retry-job"

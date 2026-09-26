@@ -4,7 +4,7 @@ require "openssl"
 module Radar
   class API
     def initialize(config, store, token: ENV.fetch("RADAR_API_TOKEN"))
-      @store, @token = store, token
+      @store, @token, @profiles = store, token, config.profiles
       @server = WEBrick::HTTPServer.new(BindAddress: config["listen"], Port: config["port"],
         AccessLog: [], Logger: WEBrick::Log.new(File::NULL), MaxClients: 8, RequestTimeout: 10)
       @server.mount_proc("/") { |req, res| handle(req, res) }
@@ -23,7 +23,7 @@ module Radar
       if req.request_method == "GET" && req.path == "/api/v1/status"
         res.body = JSON.generate(@store.status)
       elsif req.request_method == "POST" && req.path == "/api/v1/notification-jobs/claim"
-        job = @store.claim_delivery
+        job = @store.claim_delivery(profiles: @profiles)
         res.status = job ? 200 : 204
         res.body = job ? JSON.generate(job) : ""
       elsif req.request_method == "POST" && (match = req.path.match(%r{\A/api/v1/notification-jobs/([0-9a-f-]{36})/(ack|fail|renew)\z}))

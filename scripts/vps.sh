@@ -32,6 +32,7 @@ case "$action" in
     ;;
   logs) "${docker_cmd[@]}" compose logs --tail=100 -f radar telegram ;;
   sources) "${docker_cmd[@]}" compose exec radar ruby bin/radar sources ;;
+  audit) "${docker_cmd[@]}" compose exec radar ruby bin/radar audit ;;
   retry-crawls) "${docker_cmd[@]}" compose exec radar ruby bin/radar retry-crawls ;;
   stop) "${docker_cmd[@]}" compose stop telegram radar ;;
   *) echo "Kullanım: bash scripts/vps.sh {test|start [--provider gemini|mistral] [--model MODEL] [--sources 50] [--pages N] [--depth N] [--google|--no-google]|status|sources|logs|stop}" >&2; exit 2 ;;

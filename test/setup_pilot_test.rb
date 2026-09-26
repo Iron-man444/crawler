@@ -42,11 +42,12 @@ class SetupPilotTest < Minitest::Test
       assert_equal "mistral-small-2603", config.dig("llm", "model")
       assert_equal 50, config["profiles"].size
       assert_equal 50, Radar::Config.new("#{root}/config/settings.json").profiles.size
-      assert config["profiles"].all? { |p| p["enabled"] && p["interval_seconds"] == 1800 && p["search_queries"].empty? }
+      assert config["profiles"].all? { |p| p["enabled"] && p["interval_seconds"] == 7200 && p["search_queries"].empty? && p["meeting_only"] && p["allowed_types"] == ["event"] }
       assert_equal 200, config.dig("llm", "max_calls_per_day")
       assert_equal 60, config.dig("llm", "min_interval_seconds")
       assert_equal 4096, config.dig("llm", "max_output_tokens")
-      assert config["profiles"].all? { |p| p["max_pages"] == 12 && p["max_depth"] == 2 }
+      assert config["profiles"].all? { |p| p["max_pages"] == 6 && p["max_depth"] == 2 }
+      assert_equal 1, config["profiles"].map { |p| p["description"] }.uniq.size
       prior = File.read("#{root}/config/settings.json")
       _, _, status = Open3.capture3(RbConfig.ruby, script, "--interval", "0")
       refute status.success?
@@ -58,7 +59,7 @@ class SetupPilotTest < Minitest::Test
       assert status.success?
       google = Radar::Config.new("#{root}/config/settings.json").profiles.select { |p| p["id"].start_with?("google_") }
       assert_equal 8, google.size
-      assert google.all? { |p| p["search_interval_seconds"] == 86400 && p["interval_seconds"] == 1800 && p["discover_new_domains"] }
+      assert google.all? { |p| p["search_interval_seconds"] == 86400 && p["interval_seconds"] == 7200 && p["discover_new_domains"] }
       _, _, status = Open3.capture3(RbConfig.ruby, script, "--sources", "50")
       assert status.success?
       assert_equal 58, Radar::Config.new("#{root}/config/settings.json").profiles.size
